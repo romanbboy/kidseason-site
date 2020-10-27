@@ -1,10 +1,15 @@
 <template>
-  <div id="application">
+  <div id="application" :class="`Bg-${page}`">
     <v-header />
 
     <main>
-      <v-aside />
-      <router-view></router-view>
+      <div class="container main">
+        <v-aside v-if="page !== 'Home' && page !== 'Error404'" />
+
+        <div class="content">
+          <router-view></router-view>
+        </div>
+      </div>
     </main>
 
     <v-footer />
@@ -13,40 +18,52 @@
 </template>
 
 <script>
-  import TheHeader from '@/components/TheHeader.vue'
-  import TheAside from '@/components/TheAside.vue'
-  import TheFooter from '@/components/TheFooter.vue'
+  import TheHeader from './components/TheHeader.vue'
+  import TheAside from './components/TheAside.vue'
+  import TheFooter from './components/TheFooter.vue'
 
   export default {
     components: {
       vHeader: TheHeader,
       vAside: TheAside,
       vFooter: TheFooter
+    },
+    computed: {
+      page() {
+        return this.$route.name;
+      }
     }
   }
 </script>
 
 <style lang="scss">
-@font-face {
-  font-family: "Kosko";
-  src: url(./assets/fonts/Kosko/Kosko.ttf) format("truetype");
-  font-weight: 700;
-  font-style: normal;
+#application{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  $main-gradient: linear-gradient(to right, rgba(175, 167, 227, 0.98), rgba(211, 255, 232, 0.8));
+
+  &.Bg-Home{
+    background-image: $main-gradient, url('./assets/img/bg/bg_home.jpg');
+  }
+  &.Bg-Video{
+    background-image: $main-gradient, url('./assets/img/bg/bg_video.jpg');
+  }
+  &.Bg-Documents{
+    background-image: $main-gradient, url('./assets/img/bg/bg_documents.jpg');
+  }
+
 }
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+main{
+  .main{
+    display: flex;
 
-body{
-  font-size: 16px;
-  background: linear-gradient(90deg, #b9deed, #efefef);
-}
-
-.container{
-  max-width: 1440px;
-  padding: 0 40px;
+    .content{
+      flex: 1;
+      min-height: calc(100vh - 180px);
+      padding: 20px;
+    }
+  }
 }
 </style>

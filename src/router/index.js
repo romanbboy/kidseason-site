@@ -11,9 +11,19 @@ const routes = [
     component: Home
   },
   {
-    path: '/documents',
+    path: '/documents/:section?',
     name: 'Documents',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Documents.vue')
+    component: () => import(/* webpackChunkName: "documents" */ '../views/Documents.vue')
+  },
+  {
+    path: '/video/:section?',
+    name: 'Video',
+    component: () => import(/* webpackChunkName: "video" */ '../views/Video.vue')
+  },
+  {
+    path: '*',
+    name: 'Error404',
+    component: () => import(/* webpackChunkName: "video" */ '../views/Error404.vue')
   }
 ]
 

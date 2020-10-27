@@ -1,0 +1,26 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'OpenSans';
+  font-size: 16px;
+  font-weight: 400;
+  background: linear-gradient(90deg, #b9deed, #efefef);
+}
+
+.container{
+  max-width: 1440px;
+  padding: 0 40px;
+  margin: 0 auto;
+}
+
+.empty-block{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Kosko';
+}

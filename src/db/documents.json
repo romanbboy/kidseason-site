@@ -1,0 +1,38 @@
+{
+  "documents": [
+    {
+      "section": "winter",
+      "name": "Зима",
+      "listDocuments": [
+        {
+          "path": "/doc/Moroz_R_I.docx",
+          "name": "Зимние игрища"
+        },
+        {
+          "path": "/doc/Moroz_R_I.docx",
+          "name": "Летний снеговик"
+        }
+      ]
+    },
+    {
+      "section": "summer",
+      "name": "Лето",
+      "listDocuments": [
+        {
+          "path": "/doc/Moroz_R_I.docx",
+          "name": "Летние посиделки"
+        }
+      ]
+    },
+    {
+      "section": "adventure",
+      "name": "Приключение",
+      "listDocuments": [
+        {
+          "path": "/doc/Moroz_R_I.docx",
+          "name": "Приключение за городом"
+        }
+      ]
+    }
+  ]
+}

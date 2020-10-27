@@ -1,0 +1,36 @@
+{
+  "videos": [
+    {
+      "section": "winter",
+      "name": "Зима",
+      "listVideo": [
+        {
+          "link": "https://www.youtube.com/embed/Aodi_1t-iuM",
+          "name": "Зайчики прыгают на утреннике"
+        },
+        {
+          "link": "https://www.youtube.com/embed/Aodi_1t-iuM",
+          "name": "Зайчики прыгают на утреннике"
+        }
+      ]
+    },
+    {
+      "section": "exam",
+      "name": "Экзамен",
+      "listVideo": [
+        {
+          "link": "https://www.youtube.com/embed/MN2jB-5uhZc",
+          "name": "Ведмеди прыгают на утреннике"
+        },
+        {
+          "link": "https://www.youtube.com/embed/MN2jB-5uhZc",
+          "name": "Ведмеди прыгают на утреннике"
+        },
+        {
+          "link": "https://www.youtube.com/embed/MN2jB-5uhZc",
+          "name": "Ведмеди прыгают на утреннике"
+        }
+      ]
+    }
+  ]
+}
