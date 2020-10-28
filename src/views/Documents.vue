@@ -28,7 +28,7 @@
       this.$store.dispatch('setDocuments', jsonData.documents);
 
       let aside = jsonData.documents.map(({section, name}) => ({section, name}));
-      this.$store.dispatch('setAside', aside)
+      this.$store.dispatch('setAside', {aside, component: 'Documents'})
     }
   }
 </script>

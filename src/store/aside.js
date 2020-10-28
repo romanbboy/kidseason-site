@@ -2,13 +2,17 @@ export default {
   state: {
     aside: {
       show: false,
+      component: null,
       asideList: []
     }
   },
   mutations: {
     SET_ASIDE(state, payload) {
-      state.aside.asideList = payload;
-      state.aside.show = true;
+      state.aside = {
+        show: true,
+        component: payload.component,
+        asideList: payload.aside
+      };
     },
     SHOW_ASIDE(state, payload) {
       state.aside.show = payload;

@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="container header">
-      <v-logo-name />
+      <router-link tag="div" style="cursor: pointer;" exact to="/">
+        <v-logo-name />
+      </router-link>
 
       <nav>
         <router-link tag="li" class="nav-item" exact to="/" active-class="active">
@@ -12,6 +14,9 @@
         </router-link>
         <router-link tag="li" class="nav-item" to="/video" active-class="active">
           <a class="nav-link">Видео</a>
+        </router-link>
+        <router-link tag="li" class="nav-item" to="/scenario" active-class="active">
+          <a class="nav-link">Сценарии</a>
         </router-link>
       </nav>
     </div>

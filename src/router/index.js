@@ -21,6 +21,18 @@ const routes = [
     component: () => import(/* webpackChunkName: "video" */ '../views/Video.vue')
   },
   {
+    path: '/scenario/:section?',
+    name: 'Scenario',
+    component: () => import(/* webpackChunkName: "scenario" */ '../views/Scenario.vue'),
+    children: [
+      {
+        path: 'content/:nameScenario',
+        component: () => import(/* webpackChunkName: "scenarioFull" */ '../views/ScenarioFull.vue'),
+        name: 'ScenarioFull'
+      }
+    ]
+  },
+  {
     path: '*',
     name: 'Error404',
     component: () => import(/* webpackChunkName: "video" */ '../views/Error404.vue')

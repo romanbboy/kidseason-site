@@ -28,7 +28,7 @@
       this.$store.dispatch('setVideos', jsonData.videos);
 
       let aside = jsonData.videos.map(({section, name}) => ({section, name}));
-      this.$store.dispatch('setAside', aside)
+      this.$store.dispatch('setAside', {aside, component: 'Video'})
     }
   }
 </script>

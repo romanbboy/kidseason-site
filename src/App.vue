@@ -52,6 +52,9 @@
   &.Bg-Documents{
     background-image: $main-gradient, url('./assets/img/bg/bg_documents.jpg');
   }
+  &.Bg-Scenario, &.Bg-ScenarioFull{
+    background-image: $main-gradient, url('./assets/img/bg/bg_scenario.jpg');
+  }
 
 }
 

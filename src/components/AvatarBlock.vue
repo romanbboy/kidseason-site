@@ -12,17 +12,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @keyframes rotate-infinite {
-    100%{
-      transform: scale(1.1) rotate(360deg);
-    }
-  }
-  @keyframes appear-rotate-y {
-    100%{
-      opacity: 1;
-      transform: translateX(0) rotateY(720deg);
-    }
-  }
 
   .avatar{
     opacity: 0;

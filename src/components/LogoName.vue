@@ -118,6 +118,11 @@
       opacity: 0;
       animation: appear .7s forwards;
       display: inline-block;
+      transition: transform .3s;
+
+      &:hover{
+        transform: translateY(-10px);
+      }
 
       &_{
         &k{

@@ -1,14 +1,14 @@
 <template>
-  <aside :class="{hide: !show}">
-    <div v-if="show" class="aside-list">
+  <aside :class="{hide: !aside.show}">
+    <div v-if="aside.show" class="aside-list">
       <transition-group name="slide-fade"
                         @before-enter="animBeforeEnter"
-                        @before-leave="animBeforeLeave"
+                        @after-enter="animAfterEnter"
                         tag="div">
-        <router-link v-for="(el, index) in asideList" tag="li"
+        <router-link v-for="(el, index) in aside.asideList" tag="li"
                      :data-index="index"
                      :key="el.section"
-                     class="nav-item" :to="{name: $route.name, params: {section: el.section} }"
+                     class="nav-item" axact :to="{name: aside.component, params: {section: el.section} }"
                      active-class="active">
           {{ el.name }}
         </router-link>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="aside-burger" @click="showAside">
-      <BurgerIcon :active="show"  />
+      <BurgerIcon :active="aside.show"  />
     </div>
   </aside>
 </template>
@@ -33,21 +33,18 @@
       }
     },
     computed: {
-      asideList() {
-        return this.$store.getters.aside.asideList
-      },
-      show() {
-        return this.$store.getters.aside.show;
+      aside() {
+        return this.$store.getters.aside;
       }
     },
     methods: {
       showAside() {
-        this.$store.dispatch('showAside', !this.$store.getters.aside.show)
+        this.$store.dispatch('showAside', !this.aside.show)
       },
       animBeforeEnter(el) {
         el.style.transitionDelay = el.dataset.index * 400 + 'ms';
       },
-      animBeforeLeave(el) {
+      animAfterEnter(el) {
         el.style.transitionDelay = '0s';
       }
     }

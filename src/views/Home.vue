@@ -34,12 +34,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @keyframes appear-polygon {
-    100%{
-      clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);
-    }
-  }
-
   .owner-info{
     display: flex;
     justify-content: center;
