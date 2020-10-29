@@ -4,7 +4,7 @@
     <div v-else class="video-list">
       <VideoBlock v-for="(video, indx) in videos"
                 :video="video"
-                :key="indx"/>
+                :key="video.id_video"/>
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <aside :class="{hide: !aside.show}">
-    <div v-if="aside.show" class="aside-list">
+    <div v-if="aside.show && $route.name !== 'Panel'" class="aside-list">
       <transition-group name="slide-fade"
                         @before-enter="animBeforeEnter"
                         @after-enter="animAfterEnter"
@@ -13,6 +13,13 @@
           {{ el.name }}
         </router-link>
       </transition-group>
+    </div>
+
+    <!--для админа-->
+    <div v-if="aside.show && $route.name === 'Panel'" class="aside-list">
+      <router-link tag="li" class="nav-item" to="/panel/documents" active-class="active">Документы</router-link>
+      <router-link tag="li" class="nav-item" to="/panel/video" active-class="active">Видео</router-link>
+      <router-link tag="li" class="nav-item" to="/panel/scenario" active-class="active">Сценарии</router-link>
     </div>
 
     <div class="aside-burger" @click="showAside">

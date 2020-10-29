@@ -6,7 +6,7 @@
       <div v-if="!nameScenario" class="scenario-list">
         <ScenarioBlock v-for="(el, indx) in scenario"
                        :scenario="el"
-                       :key="indx"/>
+                       :key="el.id_scene"/>
       </div>
 
       <div v-else>

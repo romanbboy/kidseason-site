@@ -4,7 +4,7 @@
     <div v-else class="documents-list">
       <DocumentBlock v-for="(doc, indx) in documents"
                      :document="doc"
-                     :key="indx"/>
+                     :key="doc.id_doc"/>
     </div>
   </div>
 </template>

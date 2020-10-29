@@ -24,3 +24,14 @@ body{
   align-items: center;
   font-family: 'Kosko';
 }
+
+.button{
+
+  &_empty{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    line-height: 0;
+  }
+}

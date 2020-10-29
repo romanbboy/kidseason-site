@@ -33,6 +33,11 @@ const routes = [
     ]
   },
   {
+    path: '/panel/:section?',
+    name: 'Panel',
+    component: () => import(/* webpackChunkName: "panel" */ '../views/Panel.vue')
+  },
+  {
     path: '*',
     name: 'Error404',
     component: () => import(/* webpackChunkName: "video" */ '../views/Error404.vue')
