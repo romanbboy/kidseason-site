@@ -1,7 +1,10 @@
 <template>
   <div class="scenario-edit" :class="{edit: edit}">
     <div class="scenario__info">
-      <div class="name-block">{{ scene.name }} <span v-if="edit">(редактируем...)</span></div>
+      <div class="name-block">
+        {{ scene.name }} <span v-if="edit">(редактируем...)</span> <br>
+        <button @click="deleteHandler" v-if="edit">Удалить</button>
+      </div>
 
       <button v-if="!edit" @click="edit = true"
               class="button button_empty">
@@ -57,6 +60,10 @@
         this.newName = this.scene.name;
         this.editorData = this.scene.content;
         this.edit = false;
+      },
+      deleteHandler() {
+        if(!confirm('Точно удалить этот сценарий???')) return;
+        console.log('-----> ', this.scene.id_scene);
       }
     }
   }
