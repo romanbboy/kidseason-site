@@ -17,6 +17,7 @@
 
     <!--для админа-->
     <div v-if="aside.show && $route.name === 'Panel'" class="aside-list">
+      <router-link tag="li" class="nav-item" to="/panel/common" active-class="active">Общие</router-link>
       <router-link tag="li" class="nav-item" to="/panel/documents" active-class="active">Документы</router-link>
       <router-link tag="li" class="nav-item" to="/panel/video" active-class="active">Видео</router-link>
       <router-link tag="li" class="nav-item" to="/panel/scenario" active-class="active">Сценарии</router-link>

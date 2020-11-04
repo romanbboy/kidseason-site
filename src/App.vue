@@ -22,6 +22,8 @@
   import TheAside from './components/TheAside.vue'
   import TheFooter from './components/TheFooter.vue'
 
+  import CategoriesService from "./services/CategoriesService";
+
   export default {
     components: {
       vHeader: TheHeader,
@@ -32,6 +34,15 @@
       page() {
         return this.$route.name;
       }
+    },
+    methods: {
+      async getCategories() {
+        const response = await CategoriesService.fetchCategories();
+        this.$store.dispatch('setCategories', response.data.categories);
+      }
+    },
+    mounted() {
+      this.getCategories();
     }
   }
 </script>

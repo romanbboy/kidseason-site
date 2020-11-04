@@ -15,16 +15,8 @@ export default {
     }
   },
   getters: {
-    documents(state) {
-      return state.documents
-    },
-    listDocuments: state => section => {
-      if(!state.documents.length || !section) return [];
-
-      let isSection = state.documents.find(el => el.section === section);
-      if(!isSection) return router.push('/');
-
-      return state.documents.filter(document => document.section === section)[0]['listDocuments']
+    documents: state => section => {
+      return state.documents.filter(el => el.section === section)
     }
   }
 }

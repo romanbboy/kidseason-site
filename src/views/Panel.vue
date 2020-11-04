@@ -4,6 +4,35 @@
 
     <template v-else>
 
+      <!--COMMON-->
+      <div v-if="section === 'common'" class="common-block">
+        <p class="bigP fz-24 ff-kosko tac mb-20">Общие настройки</p>
+
+        <form @submit.prevent="addCategory" class="form-add form-add_category">
+          <p class="fz-20 mb-20 tac">Добавить категорию</p>
+
+          <div class="form-control">
+            <label>Какие вообще есть категории:</label>
+            <select>
+              <option v-for="el in categories" :value="el.name">{{ el.fullName }}</option>
+            </select>
+          </div>
+
+          <div class="form-control">
+            <label>Название категории (на русском)</label>
+            <input type="text" v-model.trim="formAddCategory.fullName">
+          </div>
+          <div class="form-control">
+            <label>Расшифровка (на английском)</label>
+            <input type="text" v-model.trim="formAddCategory.name">
+          </div>
+
+          <div class="actions">
+            <button type="submit">Добавить</button>
+          </div>
+        </form>
+      </div>
+
       <!--DOCUMENTS-->
       <div v-if="section === 'documents'" class="documents-block">
         <p class="bigP fz-24 ff-kosko tac mb-20">Документы</p>
@@ -14,31 +43,45 @@
           <form id="form-documents" v-if="formAddDocument.show">
             <div class="form-control">
               <label>Имя документа</label>
-              <input type="text" v-model="formAddDocument.name">
+              <input type="text" v-model.trim="formAddDocument.name">
+            </div>
+            <div class="form-control">
+              <label>Категория</label>
+              <select v-model="formAddDocument.section">
+                <option disabled value="">Выберите один из вариантов</option>
+                <option value="winter">Зима</option>
+                <option value="summer">Лето</option>
+              </select>
             </div>
             <div class="form-control">
               <label>Загрузить файл</label>
               <vue-dropzone id="dropzone"
-                            @vdropzone-complete="addedFileDropZone"
-                            :options="dropOptions"></vue-dropzone>
+                            ref="dropzone"
+                            @vdropzone-success="addedFileDropZone"
+                            @vdropzone-error="addedFileDropZoneError"
+                            :useCustomSlot="true"
+                            :options="dropOptions">
+                Мамочка, нажми или перетащи сюда не более ОДНОГО файла
+              </vue-dropzone>
             </div>
 
+            <i>Разрешенные форматы: <b>doc, docx, pdf</b></i>
             <div class="actions">
               <button type="submit" @click.prevent="addDocument">Добавить</button>
             </div>
           </form>
         </div>
 
-        <div class="panel-category">
-          <div class="pc-wrap" v-for="(el, i) in documents" :key="i+el.section">
-            <p class="fz-20">{{ el.name }}</p>
-            <div class="list">
-              <DocumentEdit v-for="doc in el.listDocuments"
-                            :doc="doc"
-                            :key="doc.name"/>
-            </div>
-          </div>
-        </div>
+        <!--<div class="panel-category">-->
+          <!--<div class="pc-wrap" v-for="(el, i) in documents" :key="i+el.section">-->
+            <!--<p class="fz-20">{{ el.name }}</p>-->
+            <!--<div class="list">-->
+              <!--<DocumentEdit v-for="doc in el.listDocuments"-->
+                            <!--:doc="doc"-->
+                            <!--:key="doc.name"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
 
       <!--VIDEO-->
@@ -64,16 +107,16 @@
           </form>
         </div>
 
-        <div class="panel-category">
-          <div class="pc-wrap" v-for="(el, i) in video" :key="i+el.section">
-            <p class="fz-20">{{ el.name }}</p>
-            <div class="list">
-              <VideoEdit v-for="video in el.listVideo"
-                            :video="video"
-                            :key="video.id_video"/>
-            </div>
-          </div>
-        </div>
+        <!--<div class="panel-category">-->
+          <!--<div class="pc-wrap" v-for="(el, i) in video" :key="i+el.section">-->
+            <!--<p class="fz-20">{{ el.name }}</p>-->
+            <!--<div class="list">-->
+              <!--<VideoEdit v-for="video in el.listVideo"-->
+                            <!--:video="video"-->
+                            <!--:key="video.id_video"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
 
       <!--SCENARIO-->
@@ -116,17 +159,15 @@
 </template>
 
 <script>
-  import jsonDocuments from '../db/documents.json'
-  import jsonVideo from '../db/videos.json'
-  import jsonScenario from '../db/scenario.json'
-  
   import DocumentEdit from "../components/DocumentEdit";
-  import md5 from "../utils/md5";
   import VideoEdit from "../components/VideoEdit";
   import ScenarioEdit from "../components/ScenarioEdit";
 
+  import md5 from "../utils/md5";
   import vueDropzone from "vue2-dropzone";
   import CKEditor from 'ckeditor4-vue';
+  import DocumentsService from "../services/DocumentsService";
+  import CategoriesService from "../services/CategoriesService";
 
   export default {
     name: "Panel",
@@ -139,10 +180,15 @@
         url: "https://httpbin.org/post",
         maxFiles: 1
       },
+      formAddCategory: {
+        fullName: '',
+        name: ''
+      },
       formAddDocument: {
         show: false,
         file: null,
-        name: ''
+        name: '',
+        section: ''
       },
       formAddVideo: {
         show: false,
@@ -158,28 +204,84 @@
     computed: {
       section() {
         return this.$route.params['section']
+      },
+      categories() {
+        return this.$store.getters.categories;
       }
     },
     methods: {
-      addDocument(e) {
-        console.log('-----> ', this.formAddDocument.file, this.formAddDocument.name);
+
+      // category
+      async addCategory() {
+       if (this.formAddCategory.name !== '' && this.formAddCategory.fullName !== '') {
+         const res = await CategoriesService.addCategory({
+           name: this.formAddCategory.name,
+           fullName: this.formAddCategory.fullName
+         });
+
+         alert(res.data.message);
+
+         if(res.data.success) {
+           const response = await CategoriesService.fetchCategories();
+           this.$store.dispatch('setCategories', response.data.categories);
+           this.formAddCategory = {name: '', fullName: ''}
+         }
+       }
+       else alert('Заполни все поля')
+      },
+
+      // documents
+      async addDocument() {
+        if (this.formAddDocument.name !== ''
+          && this.formAddDocument.section !== ''
+          && this.formAddDocument.file
+        ) {
+          let formData = new FormData();
+          formData.append('name', this.formAddDocument.name);
+          formData.append('section', this.formAddDocument.section);
+          formData.append('file', this.formAddDocument.file);
+
+          let res = await DocumentsService.addDocument(formData);
+
+          alert(res.data.message);
+
+          this.$refs.dropzone.removeAllFiles();
+          this.$refs.dropzone.enable();
+          this.formAddDocument.file = null;
+
+          if(res.data.success){
+            this.formAddDocument.name = '';
+            this.formAddDocument.section = '';
+          }
+        }
+       else alert('Заполни все поля')
       },
       addedFileDropZone(file) {
-        if(file.status === 'success') this.formAddDocument.file = file;
+        if(file.status === 'success'){
+          this.formAddDocument.file = file;
+          this.$refs.dropzone.disable();
+        }
         else alert('Можно добавлять только один файл. Либо случилась ошибка');
       },
+      addedFileDropZoneError() {
+        alert('Мам, ты не можешь загрузить больше одного файла. Либо случилась ошибка. Перезагрузи страницу и попробуй еще раз');
+      },
+
+      // videos
       addVideo() {
         console.log('-----> ', this.formAddVideo.link, this.formAddVideo.name);
       },
+
+      // scenario
       addScenario() {
         console.log('-----> ', this.formAddScenario.content, this.formAddScenario.name);
       }
     },
     watch: {
       $route(toR, fromR) {
-        if(toR.params['section'] === 'documents') this.documents = jsonDocuments.documents;
-        if(toR.params['section'] === 'video') this.video = jsonVideo.videos;
-        if(toR.params['section'] === 'scenario') this.scenario = jsonScenario.scenario;
+        // if(toR.params['section'] === 'documents') this.documents = jsonDocuments.documents;
+        // if(toR.params['section'] === 'video') this.video = jsonVideo.videos;
+        // if(toR.params['section'] === 'scenario') this.scenario = jsonScenario.scenario;
       }
     },
     created() {

@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import videos from './videos'
+import categories from './categories'
 import aside from './aside'
+import videos from './videos'
 import documents from './documents'
 import scenario from './scenario'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    videos, aside, documents, scenario
+    categories, aside, videos, documents, scenario
   }
 })

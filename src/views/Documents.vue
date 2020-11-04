@@ -2,15 +2,16 @@
   <div id="DocumentsPage">
     <div v-if="!section" class="empty-block">Выберите раздел слева</div>
     <div v-else class="documents-list">
-      <DocumentBlock v-for="(doc, indx) in documents"
+      <DocumentBlock v-for="doc in documents"
                      :document="doc"
-                     :key="doc.id_doc"/>
+                     :key="doc._id"/>
     </div>
   </div>
 </template>
 
 <script>
-  import jsonData from '../db/documents.json'
+  import DocumentsService from '../services/DocumentsService'
+
   import DocumentBlock from "../components/DocumentBlock";
 
   export default {
@@ -21,14 +22,25 @@
         return this.$route.params['section'];
       },
       documents() {
-        return this.$store.getters.listDocuments(this.section)
+        return this.$store.getters.documents(this.section)
       }
     },
-    created() {
-      this.$store.dispatch('setDocuments', jsonData.documents);
+    methods: {
+      async getDocuments () {
+        const response = await DocumentsService.fetchDocuments();
+        await this.$store.dispatch('setDocuments', response.data.documents);
 
-      let aside = jsonData.documents.map(({section, name}) => ({section, name}));
-      this.$store.dispatch('setAside', {aside, component: 'Documents'})
+        let categories = [...new Set(response.data.documents.map(item => item.section))];
+        let aside = categories.map(el => ({
+            name: this.$store.getters.getFullNameCategory(el),
+            section: el
+        }));
+        
+        this.$store.dispatch('setAside', {aside, component: 'Documents'})
+      }
+    },
+    mounted () {
+      this.getDocuments();
     }
   }
 </script>
