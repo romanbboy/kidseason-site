@@ -137,6 +137,14 @@
               <label>Имя сценария</label>
               <input type="text" v-model="formAddScenario.name">
             </div>
+            <div class="form-control mb-20">
+              <label>Категория</label>
+              <select v-model="formAddScenario.section">
+                <option disabled value="">Выберите один из вариантов</option>
+                <option v-for="el in categories" :value="el.name">{{ el.fullName }}</option>
+              </select>
+            </div>
+            <br>
             <div class="form-control">
               <ckeditor v-model="formAddScenario.content"></ckeditor>
             </div>
@@ -147,7 +155,7 @@
           </form>
         </div>
 
-        <div class="panel-category">
+        <!--<div class="panel-category">
           <div class="pc-wrap" v-for="(el, i) in scenario" :key="i+el.section">
             <p class="fz-20">{{ el.name }}</p>
             <div class="list">
@@ -156,7 +164,7 @@
                             :key="scenario.id_scene"/>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
 
 
@@ -175,6 +183,7 @@
   import DocumentsService from "../services/DocumentsService";
   import CategoriesService from "../services/CategoriesService";
   import VideosService from "../services/VideosService";
+  import ScenariosService from "../services/ScenariosService";
 
   export default {
     name: "Panel",
@@ -206,7 +215,8 @@
       formAddScenario: {
         show: false,
         content: '',
-        name: ''
+        name: '',
+        section: ''
       }
     }),
     computed: {
@@ -297,8 +307,24 @@
       },
 
       // scenario
-      addScenario() {
-        console.log('-----> ', this.formAddScenario.content, this.formAddScenario.name);
+      async addScenario() {
+        if (this.formAddScenario.name !== ''
+          && this.formAddScenario.section !== ''
+          && this.formAddScenario.content !== ''
+        ) {
+          let res = await ScenariosService.addScenario({
+            name: this.formAddScenario.name,
+            section: this.formAddScenario.section,
+            content: this.formAddScenario.content
+          });
+
+          alert(res.data.message);
+
+          if (res.data.success) {
+            this.formAddScenario = {name: '', section: '', content: '', show: true}
+          }
+        }
+        else alert('Заполни все поля')
       }
     },
     watch: {

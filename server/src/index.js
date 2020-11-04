@@ -8,6 +8,7 @@ const config = require('./config/config');
 const documentsRouter = require('./routes/documents');
 const categoriesRouter = require('./routes/categories');
 const videosRouter = require('./routes/videos');
+const scenariosRouter = require('./routes/scenarios');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/documents', documentsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/videos', videosRouter);
+app.use('/scenarios', scenariosRouter);
 
 async function start(){
   try{
