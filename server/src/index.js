@@ -7,6 +7,7 @@ const config = require('./config/config');
 
 const documentsRouter = require('./routes/documents');
 const categoriesRouter = require('./routes/categories');
+const videosRouter = require('./routes/videos');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 // routes
 app.use('/documents', documentsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/videos', videosRouter);
 
 async function start(){
   try{

@@ -49,8 +49,7 @@
               <label>Категория</label>
               <select v-model="formAddDocument.section">
                 <option disabled value="">Выберите один из вариантов</option>
-                <option value="winter">Зима</option>
-                <option value="summer">Лето</option>
+                <option v-for="el in categories" :value="el.name">{{ el.fullName }}</option>
               </select>
             </div>
             <div class="form-control">
@@ -94,11 +93,18 @@
           <form id="form-video" v-if="formAddVideo.show">
             <div class="form-control">
               <label>Имя видео</label>
-              <input type="text" v-model="formAddVideo.name">
+              <input type="text" v-model.trim="formAddVideo.name">
             </div>
             <div class="form-control">
               <label>Ссылка на видео</label>
-              <input type="text" v-model="formAddVideo.link">
+              <input type="text" v-model.trim="formAddVideo.link">
+            </div>
+            <div class="form-control">
+              <label>Категория</label>
+              <select v-model="formAddVideo.section">
+                <option disabled value="">Выберите один из вариантов</option>
+                <option v-for="el in categories" :value="el.name">{{ el.fullName }}</option>
+              </select>
             </div>
 
             <div class="actions">
@@ -168,6 +174,7 @@
   import CKEditor from 'ckeditor4-vue';
   import DocumentsService from "../services/DocumentsService";
   import CategoriesService from "../services/CategoriesService";
+  import VideosService from "../services/VideosService";
 
   export default {
     name: "Panel",
@@ -193,7 +200,8 @@
       formAddVideo: {
         show: false,
         link: null,
-        name: ''
+        name: '',
+        section: ''
       },
       formAddScenario: {
         show: false,
@@ -268,8 +276,24 @@
       },
 
       // videos
-      addVideo() {
-        console.log('-----> ', this.formAddVideo.link, this.formAddVideo.name);
+      async addVideo() {
+        if (this.formAddVideo.name !== ''
+          && this.formAddVideo.section !== ''
+          && this.formAddVideo.link
+        ) {
+          let res = await VideosService.addVideo({
+            name: this.formAddVideo.name,
+            section: this.formAddVideo.section,
+            link: this.formAddVideo.link,
+          });
+
+          alert(res.data.message);
+
+          if (res.data.success) {
+            this.formAddVideo = {name: '', section: '', link: null, show: true}
+          }
+        }
+        else alert('Заполни все поля')
       },
 
       // scenario

@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 
     if (err) {
       if(err.code === 11000) message = `Ошибка: Такая категория уже существует`;
-      else `Ошибка: код ошибки ${err.code}`;
+      else message = `Ошибка: код ошибки ${err.code}`;
 
       success = false;
     }
