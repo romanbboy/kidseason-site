@@ -22,10 +22,6 @@
             <label>Название категории (на русском)</label>
             <input type="text" v-model.trim="formAddCategory.fullName">
           </div>
-          <div class="form-control">
-            <label>Расшифровка (на английском)</label>
-            <input type="text" v-model.trim="formAddCategory.name">
-          </div>
 
           <div class="actions">
             <button type="submit">Добавить</button>
@@ -71,16 +67,18 @@
           </form>
         </div>
 
-        <!--<div class="panel-category">-->
-          <!--<div class="pc-wrap" v-for="(el, i) in documents" :key="i+el.section">-->
-            <!--<p class="fz-20">{{ el.name }}</p>-->
-            <!--<div class="list">-->
-              <!--<DocumentEdit v-for="doc in el.listDocuments"-->
-                            <!--:doc="doc"-->
-                            <!--:key="doc.name"/>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="panel-category">
+          <div class="pc-wrap" v-for="(el, i) in documents" :key="i">
+            <p class="fz-20">{{ el.name }}</p>
+            <div class="list">
+              <DocumentEdit v-for="doc in el.listDocuments"
+                            @update-documents="getDocuments"
+                            :doc="doc"
+                            :categories="categories"
+                            :key="doc._id"/>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!--VIDEO-->
@@ -180,6 +178,7 @@
   import md5 from "../utils/md5";
   import vueDropzone from "vue2-dropzone";
   import CKEditor from 'ckeditor4-vue';
+
   import DocumentsService from "../services/DocumentsService";
   import CategoriesService from "../services/CategoriesService";
   import VideosService from "../services/VideosService";
@@ -189,16 +188,12 @@
     name: "Panel",
     components: {ScenarioEdit, VideoEdit, DocumentEdit, vueDropzone, ckeditor: CKEditor.component},
     data: () => ({
-      documents: [],
-      video: [],
-      scenario: [],
       dropOptions: {
         url: "https://httpbin.org/post",
         maxFiles: 1
       },
       formAddCategory: {
-        fullName: '',
-        name: ''
+        fullName: ''
       },
       formAddDocument: {
         show: false,
@@ -225,15 +220,28 @@
       },
       categories() {
         return this.$store.getters.categories;
-      }
+      },
+      documents() {
+        let allDocuments = this.$store.getters.allDocuments;
+        let categories = [...new Set(allDocuments.map(item => item.section))];
+        return categories.map(el => ({
+            name: this.$store.getters.getFullNameCategory(el),
+            listDocuments: this.$store.getters.documentsCategory(el)
+        }))
+      },
+      videos() {
+        return this.$store.getters.allVideos;
+      },
+      scenarios() {
+        return this.$store.getters.allScenarios;
+      },
     },
     methods: {
 
       // category
       async addCategory() {
-       if (this.formAddCategory.name !== '' && this.formAddCategory.fullName !== '') {
+       if (this.formAddCategory.fullName) {
          const res = await CategoriesService.addCategory({
-           name: this.formAddCategory.name,
            fullName: this.formAddCategory.fullName
          });
 
@@ -270,9 +278,16 @@
           if(res.data.success){
             this.formAddDocument.name = '';
             this.formAddDocument.section = '';
+
+            let response = await DocumentsService.fetchDocuments();
+            await this.$store.dispatch('setDocuments', response.data.documents);
           }
         }
        else alert('Заполни все поля')
+      },
+      async getDocuments() {
+        const response = await DocumentsService.fetchDocuments();
+        await this.$store.dispatch('setDocuments', response.data.documents);
       },
       addedFileDropZone(file) {
         if(file.status === 'success'){
@@ -328,8 +343,8 @@
       }
     },
     watch: {
-      $route(toR, fromR) {
-        // if(toR.params['section'] === 'documents') this.documents = jsonDocuments.documents;
+      async $route(toR, fromR) {
+        if(toR.params['section'] === 'documents') this.getDocuments();
         // if(toR.params['section'] === 'video') this.video = jsonVideo.videos;
         // if(toR.params['section'] === 'scenario') this.scenario = jsonScenario.scenario;
       }

@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  import jsonData from '../db/videos.json'
   import VideoBlock from "../components/VideoBlock";
 
   export default {

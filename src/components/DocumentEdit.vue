@@ -1,10 +1,14 @@
 <template>
   <div class="document-edit">
     <div class="name-block">
-      <input v-if="edit" type="text" v-model="name">
+      <div v-if="edit">
+        <input v-if="edit" type="text" v-model="name">
+        <select v-model="section">
+          <option v-for="el in categories" :value="el.name">{{el.fullName}}</option>
+        </select>
+      </div>
       <span v-else>{{ name }}</span>
     </div>
-
 
     <div v-if="edit">
       <button @click="saveChange" class="button">ok</button> &nbsp;&nbsp;
@@ -13,7 +17,7 @@
 
 
     <button v-else
-            @click="editDoc"
+            @click="edit = true"
             class="button button_empty">
       <IconBase view-box="0 0 468.295 468.295"
                 width="15"
@@ -28,30 +32,44 @@
 <script>
   import IconBase from "./icons/IconBase";
   import IconPen from "./icons/IconPen";
+  import DocumentsService from "../services/DocumentsService";
 
   export default {
     name: "DocumentEdit",
     components: {IconBase, IconPen},
-    props: ['doc'],
+    props: ['doc', 'categories'],
     data() {
       return {
         edit: false,
-        name: this.doc.name,
-        id_doc: this.doc.id_doc
+        section: this.doc.section,
+        name: this.doc.name
       }
     },
     methods: {
-      editDoc() {
-        this.edit = true;
+      async saveChange() {
+        if(this.name && this.section){
+          let res = await DocumentsService.updateDocument({
+            id: this.doc._id,
+            name: this.name,
+            section: this.section
+          });
+
+          alert(res.data.message);
+
+          if(res.data.success) {
+            this.$emit('update-documents');
+            this.edit = false;
+          }
+        }
+        else alert('Поля не могут быть пустыми');
       },
-      saveChange() {
-        console.log('-----> ', this.id_doc, this.name);
-        this.edit = false;
-      },
-      deleteHandler() {
+      async deleteHandler() {
         if(!confirm('Точно удалить?')) return;
-        console.log('-----> ', this.id_doc);
-        this.edit = false;
+        let res = await DocumentsService.deleteDocument(this.doc._id);
+
+        alert(res.data.message);
+
+        if(res.data.success) this.$emit('update-documents');
       }
     }
   }

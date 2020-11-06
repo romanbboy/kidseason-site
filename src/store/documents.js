@@ -1,5 +1,3 @@
-import router from '../router'
-
 export default {
   state: {
     documents: []
@@ -15,7 +13,10 @@ export default {
     }
   },
   getters: {
-    documents: state => section => {
+    allDocuments: state => {
+      return state.documents;
+    },
+    documentsCategory: state => section => {
       return state.documents.filter(el => el.section === section)
     }
   }

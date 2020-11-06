@@ -17,7 +17,6 @@
 </template>
 
 <script>
-  import jsonData from '../db/scenario.json';
   import ScenarioBlock from '../components/ScenarioBlock'
 
   export default {

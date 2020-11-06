@@ -1,4 +1,5 @@
 const {Router} = require('express');
+const {slugify} = require('transliteration');
 const Category = require('../models/category-model');
 
 const router = Router();
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const category = new Category({
-    name: req.body.name,
+    name: slugify(req.body.fullName, { lowercase: false, separator: '_' }),
     fullName: req.body.fullName
   });
 
