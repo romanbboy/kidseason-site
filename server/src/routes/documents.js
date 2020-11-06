@@ -1,4 +1,5 @@
 const {Router} = require('express');
+const fs = require('fs');
 
 const fileMiddleware = require('../middleware/file');
 
@@ -66,10 +67,13 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  Document.remove({ _id: req.params.id }, err => {
-    if (err) res.send({success: false, message: `Не получилось удалить. Ошибка: ${err.code}`});
-    else res.send({success: true, message: `Удалили`});
-  })
+  Document.findById(req.params.id, 'name path section', (err, document) => {
+    fs.unlinkSync(document.path);
+    document.remove({ _id: req.params.id }, err => {
+      if (err) res.send({success: false, message: `Не получилось удалить. Ошибка: ${err.code}`});
+      else res.send({success: true, message: `Удалили`});
+    })
+  });
 });
 
 module.exports = router;
