@@ -19,7 +19,10 @@
 
     <div v-if="edit" class="scenario__edit-block">
       <div class="edit-block__name">
-        <input type="text" v-model="newName">
+        <input type="text" v-model.trim="newName">
+        <select v-model="section">
+          <option v-for="el in categories" :value="el.name">{{el.fullName}}</option>
+        </select>
         <div>
           <button @click="saveChange">Сохранить</button> &nbsp;&nbsp;
           <button @click="cancelHandler">Отменить</button>
@@ -36,15 +39,17 @@
   import IconPen from "./icons/IconPen";
 
   import CKEditor from 'ckeditor4-vue';
+  import ScenariosService from "../services/ScenariosService";
 
   export default {
     name: "ScenarioEdit",
     components: {IconBase, IconPen, ckeditor: CKEditor.component},
-    props: ['scene'],
+    props: ['scene', 'categories'],
     data() {
       return {
         edit: false,
         newName: this.scene.name,
+        section: this.scene.section,
         editorData: this.scene.content,
         editorConfig: {
           height: 400
@@ -52,18 +57,39 @@
       }
     },
     methods: {
-      saveChange() {
-        console.log('-----> ', this.newName, this.editorData);
-        this.edit = false;
+      async saveChange() {
+        if(this.newName && this.section && this.editorData){
+          let res = await ScenariosService.updateScenario({
+            id: this.scene._id,
+            name: this.newName,
+            section: this.section,
+            content: this.editorData
+          });
+
+          alert(res.data.message);
+
+          if(res.data.success) {
+            this.$emit('update-scenarios');
+            this.edit = false;
+          }
+        }
+        else alert('Поля не могут быть пустыми');
+      },
+      async deleteHandler() {
+        if(!confirm('Точно удалить?')) return;
+        let res = await ScenariosService.deleteScenario(this.scene._id);
+
+        alert(res.data.message);
+
+        if(res.data.success) this.$emit('update-scenarios');
       },
       cancelHandler() {
+        if(!confirm('Точно отменить?')) return;
+
         this.newName = this.scene.name;
         this.editorData = this.scene.content;
+        this.section = this.scene.section;
         this.edit = false;
-      },
-      deleteHandler() {
-        if(!confirm('Точно удалить этот сценарий???')) return;
-        console.log('-----> ', this.scene.id_scene);
       }
     }
   }

@@ -5,7 +5,7 @@ import categories from './categories'
 import aside from './aside'
 import videos from './videos'
 import documents from './documents'
-import scenario from './scenario'
+import scenario from './scenarios'
 
 Vue.use(Vuex);
 

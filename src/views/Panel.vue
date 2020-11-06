@@ -155,16 +155,18 @@
           </form>
         </div>
 
-        <!--<div class="panel-category">
-          <div class="pc-wrap" v-for="(el, i) in scenario" :key="i+el.section">
+        <div class="panel-category">
+          <div class="pc-wrap" v-for="(el, i) in scenarios" :key="i">
             <p class="fz-20">{{ el.name }}</p>
             <div class="list">
-              <ScenarioEdit v-for="scenario in el.listScenario"
+              <ScenarioEdit v-for="scenario in el.listScenarios"
+                            @update-scenarios="getScenarios"
                             :scene="scenario"
-                            :key="scenario.id_scene"/>
+                            :categories="categories"
+                            :key="scenario._id"/>
             </div>
           </div>
-        </div>-->
+        </div>
       </div>
 
 
@@ -240,7 +242,12 @@
         }))
       },
       scenarios() {
-        return this.$store.getters.allScenarios;
+        let allScenarios = this.$store.getters.allScenarios;
+        let categories = [...new Set(allScenarios.map(item => item.section))];
+        return categories.map(el => ({
+            name: this.$store.getters.getFullNameCategory(el),
+            listScenarios: this.$store.getters.scenariosCategory(el)
+        }))
       },
     },
     methods: {
@@ -351,13 +358,17 @@
           }
         }
         else alert('Заполни все поля')
-      }
+      },
+      async getScenarios() {
+        const response = await ScenariosService.fetchScenarios();
+        await this.$store.dispatch('setScenarios', response.data.scenarios);
+      },
     },
     watch: {
       async $route(toR, fromR) {
         if(toR.params['section'] === 'documents') this.getDocuments();
-        if(toR.params['section'] === 'video') this.video = this.getVideos();
-        // if(toR.params['section'] === 'scenario') this.scenario = jsonScenario.scenario;
+        if(toR.params['section'] === 'video') this.getVideos();
+        if(toR.params['section'] === 'scenario') this.getScenarios();
       }
     },
     created() {

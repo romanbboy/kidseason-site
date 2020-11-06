@@ -4,6 +4,13 @@ const Scenario = require('../models/scenario-model');
 
 const router = Router();
 
+router.get('/', (req, res) => {
+  Scenario.find({}, 'id name section content', (err, scenarios) => {
+    if (err) res.sendStatus(500);
+    else res.send({ scenarios })
+  });
+});
+
 router.post('/', (req, res) => {
   const scenario = new Scenario({
     name: req.body.name,
@@ -22,6 +29,38 @@ router.post('/', (req, res) => {
     else message = `Сценарий успешно добавлен`;
 
     res.send({success, message});
+  })
+});
+
+router.put('/:id', (req, res) => {
+  Scenario.findById(req.params.id, 'name section content', (err, scenario) => {
+    let success = true;
+    let message = '';
+
+    if (err) {
+      res.send({success: false, message: `Код ошибки ${err.code}`});
+    } else {
+      if (req.body.name) scenario.name = req.body.name;
+      if (req.body.section) scenario.section = req.body.section;
+      if (req.body.content) scenario.content = req.body.content;
+
+      scenario.save(err => {
+        if (err) {
+          success = false;
+          message = `Код ошибки ${err.code}`
+        }
+        else message = `Сценарий успешно изменен!`;
+
+        res.send({success, message});
+      })
+    }
+  })
+});
+
+router.delete('/:id', (req, res) => {
+  Scenario.remove({ _id: req.params.id }, err => {
+    if (err) res.send({success: false, message: `Не получилось удалить. Ошибка: ${err.code}`});
+    else res.send({success: true, message: `Удалили`});
   })
 });
 
