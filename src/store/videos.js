@@ -1,5 +1,3 @@
-import router from '../router'
-
 export default {
   state: {
     videos: []
@@ -15,16 +13,11 @@ export default {
     }
   },
   getters: {
-    videos(state) {
-      return state.videos
+    allVideos: state => {
+      return state.videos;
     },
-    listVideos: state => section => {
-      if(!state.videos.length || !section) return [];
-
-      let isSection = state.videos.find(el => el.section === section);
-      if(!isSection) return router.push('/');
-
-      return state.videos.filter(video => video.section === section)[0]['listVideo']
+    videosCategory: state => section => {
+      return state.videos.filter(el => el.section === section)
     }
   }
 }

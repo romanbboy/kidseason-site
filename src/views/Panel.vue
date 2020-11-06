@@ -111,16 +111,18 @@
           </form>
         </div>
 
-        <!--<div class="panel-category">-->
-          <!--<div class="pc-wrap" v-for="(el, i) in video" :key="i+el.section">-->
-            <!--<p class="fz-20">{{ el.name }}</p>-->
-            <!--<div class="list">-->
-              <!--<VideoEdit v-for="video in el.listVideo"-->
-                            <!--:video="video"-->
-                            <!--:key="video.id_video"/>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="panel-category">
+          <div class="pc-wrap" v-for="(el, i) in videos" :key="i">
+            <p class="fz-20">{{ el.name }}</p>
+            <div class="list">
+              <VideoEdit v-for="video in el.listVideos"
+                         @update-videos="getVideos"
+                         :video="video"
+                         :categories="categories"
+                         :key="video._id"/>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!--SCENARIO-->
@@ -230,7 +232,12 @@
         }))
       },
       videos() {
-        return this.$store.getters.allVideos;
+        let allVideos = this.$store.getters.allVideos;
+        let categories = [...new Set(allVideos.map(item => item.section))];
+        return categories.map(el => ({
+            name: this.$store.getters.getFullNameCategory(el),
+            listVideos: this.$store.getters.videosCategory(el)
+        }))
       },
       scenarios() {
         return this.$store.getters.allScenarios;
@@ -320,6 +327,10 @@
         }
         else alert('Заполни все поля')
       },
+      async getVideos() {
+        const response = await VideosService.fetchVideos();
+        await this.$store.dispatch('setVideos', response.data.videos);
+      },
 
       // scenario
       async addScenario() {
@@ -345,7 +356,7 @@
     watch: {
       async $route(toR, fromR) {
         if(toR.params['section'] === 'documents') this.getDocuments();
-        // if(toR.params['section'] === 'video') this.video = jsonVideo.videos;
+        if(toR.params['section'] === 'video') this.video = this.getVideos();
         // if(toR.params['section'] === 'scenario') this.scenario = jsonScenario.scenario;
       }
     },

@@ -2,7 +2,7 @@
   <div class="document-edit">
     <div class="name-block">
       <div v-if="edit">
-        <input v-if="edit" type="text" v-model="name">
+        <input v-if="edit" type="text" v-model.trim="name">
         <select v-model="section">
           <option v-for="el in categories" :value="el.name">{{el.fullName}}</option>
         </select>
