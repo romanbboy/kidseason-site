@@ -22,7 +22,7 @@
         return this.$route.params['section'];
       },
       documents() {
-        return this.$store.getters.documents(this.section)
+        return this.$store.getters.documentsCategory(this.section)
       }
     },
     methods: {

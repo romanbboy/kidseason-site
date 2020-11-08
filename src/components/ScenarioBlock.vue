@@ -8,8 +8,8 @@
     </IconBase>
 
     <router-link tag="p"
-                 :key="scenario.urlName"
-                 :to="{name: 'ScenarioFull', params: {section: $route.params['section'], nameScenario: scenario.urlName} }">
+                 :key="scenario.sign"
+                 :to="{name: 'ScenarioFull', params: {section: $route.params['section'], nameScenario: scenario.sign} }">
       {{ scenario.name }}
     </router-link>
   </div>

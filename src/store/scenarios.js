@@ -21,11 +21,8 @@ export default {
     scenariosCategory: state => section => {
       return state.scenarios.filter(el => el.section === section)
     },
-    getScenario: state => (section, urlName) => {
-      let isSection = state.scenario.find(el => el.section === section);
-      if(!isSection) return router.push('/');
-
-      return isSection.listScenario.find(el => el.urlName === urlName) || router.push('/');
+    getScenario: state => sign => {
+      return state.scenarios.find(el => el.sign === sign) || router.push('/');
     }
   }
 }

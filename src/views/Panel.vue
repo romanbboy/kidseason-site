@@ -292,9 +292,7 @@
           if(res.data.success){
             this.formAddDocument.name = '';
             this.formAddDocument.section = '';
-
-            let response = await DocumentsService.fetchDocuments();
-            await this.$store.dispatch('setDocuments', response.data.documents);
+            this.getDocuments();
           }
         }
        else alert('Заполни все поля')
@@ -329,7 +327,8 @@
           alert(res.data.message);
 
           if (res.data.success) {
-            this.formAddVideo = {name: '', section: '', link: null, show: true}
+            this.formAddVideo = {name: '', section: '', link: null, show: true};
+            this.getVideos();
           }
         }
         else alert('Заполни все поля')
@@ -355,6 +354,7 @@
 
           if (res.data.success) {
             this.formAddScenario = {name: '', section: '', content: '', show: true}
+            this.getScenarios();
           }
         }
         else alert('Заполни все поля')

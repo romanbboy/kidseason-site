@@ -2,15 +2,16 @@
   <div id="VideoPage">
     <div v-if="!section" class="empty-block">Выберите раздел слева</div>
     <div v-else class="video-list">
-      <VideoBlock v-for="(video, indx) in videos"
+      <VideoBlock v-for="video in videos"
                 :video="video"
-                :key="video.id_video"/>
+                :key="video._id"/>
     </div>
   </div>
 </template>
 
 <script>
   import VideoBlock from "../components/VideoBlock";
+  import VideosService from "../services/VideosService";
 
   export default {
     name: "Video",
@@ -20,14 +21,25 @@
         return this.$route.params['section'];
       },
       videos() {
-        return this.$store.getters.listVideos(this.section)
+        return this.$store.getters.videosCategory(this.section)
       }
     },
-    created() {
-      this.$store.dispatch('setVideos', jsonData.videos);
+    methods: {
+      async getVideos () {
+        const response = await VideosService.fetchVideos();
+        await this.$store.dispatch('setVideos', response.data.videos);
 
-      let aside = jsonData.videos.map(({section, name}) => ({section, name}));
-      this.$store.dispatch('setAside', {aside, component: 'Video'})
+        let categories = [...new Set(response.data.videos.map(item => item.section))];
+        let aside = categories.map(el => ({
+            name: this.$store.getters.getFullNameCategory(el),
+            section: el
+        }));
+
+        this.$store.dispatch('setAside', {aside, component: 'Video'})
+      }
+    },
+    mounted () {
+      this.getVideos();
     }
   }
 </script>

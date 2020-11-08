@@ -8,7 +8,7 @@ const Document = require('../models/document-model');
 const router = Router();
 
 router.get('/', (req, res) => {
-  Document.find({}, 'id name section', (err, documents) => {
+  Document.find({}, 'id name section path', (err, documents) => {
     if (err) res.sendStatus(500);
     else res.send({ documents })
   });

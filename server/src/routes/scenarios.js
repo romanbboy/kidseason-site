@@ -1,11 +1,12 @@
 const {Router} = require('express');
+const {slugify} = require('transliteration');
 
 const Scenario = require('../models/scenario-model');
 
 const router = Router();
 
 router.get('/', (req, res) => {
-  Scenario.find({}, 'id name section content', (err, scenarios) => {
+  Scenario.find({}, 'id name sign section content', (err, scenarios) => {
     if (err) res.sendStatus(500);
     else res.send({ scenarios })
   });
@@ -14,6 +15,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const scenario = new Scenario({
     name: req.body.name,
+    sign: slugify(req.body.name, { lowercase: false, separator: '_' }),
     section: req.body.section,
     content: req.body.content
   });
@@ -40,7 +42,10 @@ router.put('/:id', (req, res) => {
     if (err) {
       res.send({success: false, message: `Код ошибки ${err.code}`});
     } else {
-      if (req.body.name) scenario.name = req.body.name;
+      if (req.body.name){
+        scenario.name = req.body.name;
+        scenario.sign = slugify(req.body.name, { lowercase: false, separator: '_' })
+      }
       if (req.body.section) scenario.section = req.body.section;
       if (req.body.content) scenario.content = req.body.content;
 

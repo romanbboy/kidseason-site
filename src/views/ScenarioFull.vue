@@ -10,7 +10,7 @@
     name: "ScenarioFull",
     data() {
       return {
-        scene: this.$store.getters.getScenario(this.$route.params['section'], this.$route.params['nameScenario'])
+        scene: this.$store.getters.getScenario(this.$route.params['nameScenario'])
       }
     }
   }

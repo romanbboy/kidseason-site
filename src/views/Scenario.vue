@@ -4,9 +4,9 @@
     
     <div v-else>
       <div v-if="!nameScenario" class="scenario-list">
-        <ScenarioBlock v-for="(el, indx) in scenario"
+        <ScenarioBlock v-for="el in scenarios"
                        :scenario="el"
-                       :key="el.id_scene"/>
+                       :key="el._id"/>
       </div>
 
       <div v-else>
@@ -18,6 +18,7 @@
 
 <script>
   import ScenarioBlock from '../components/ScenarioBlock'
+  import ScenariosService from "../services/ScenariosService";
 
   export default {
     name: "Scenario",
@@ -29,15 +30,26 @@
       nameScenario() {
         return this.$route.params['nameScenario'];
       },
-      scenario() {
-        return this.$store.getters.listScenario(this.section)
+      scenarios() {
+        return this.$store.getters.scenariosCategory(this.section)
       }
     },
-    created() {
-      this.$store.dispatch('setScenario', jsonData.scenario);
+    methods: {
+      async getScenarios () {
+        const response = await ScenariosService.fetchScenarios();
+        await this.$store.dispatch('setScenarios', response.data.scenarios);
 
-      let aside = jsonData.scenario.map(({section, name}) => ({section, name}));
-      this.$store.dispatch('setAside', {aside, component: 'Scenario'})
+        let categories = [...new Set(response.data.scenarios.map(item => item.section))];
+        let aside = categories.map(el => ({
+            name: this.$store.getters.getFullNameCategory(el),
+            section: el
+        }));
+
+        this.$store.dispatch('setAside', {aside, component: 'Scenario'})
+      }
+    },
+    mounted () {
+      this.getScenarios();
     }
   }
 </script>
