@@ -68,7 +68,10 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   Document.findById(req.params.id, 'name path section', (err, document) => {
-    fs.unlinkSync(document.path);
+    fs.stat(document.path, function(err, stats) {
+      if (err) console.log("Файл не найден");
+      else fs.unlinkSync(document.path);
+    });
     document.remove({ _id: req.params.id }, err => {
       if (err) res.send({success: false, message: `Не получилось удалить. Ошибка: ${err.code}`});
       else res.send({success: true, message: `Удалили`});
