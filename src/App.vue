@@ -1,5 +1,7 @@
 <template>
   <div id="application" :class="`Bg-${page}`">
+    <TheLoader />
+
     <v-header />
 
     <main>
@@ -23,9 +25,11 @@
   import TheFooter from './components/TheFooter.vue'
 
   import CategoriesService from "./services/CategoriesService";
+  import TheLoader from "@/components/TheLoader";
 
   export default {
     components: {
+      TheLoader,
       vHeader: TheHeader,
       vAside: TheAside,
       vFooter: TheFooter
