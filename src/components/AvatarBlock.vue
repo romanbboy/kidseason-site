@@ -1,5 +1,5 @@
 <template>
-  <div class="avatar">
+  <div class="avatar-home">
     <img src="../assets/img/edging.png" alt="" class="edging">
     <img class="avatar-img" src="../assets/img/avatar.jpg" />
   </div>
@@ -13,7 +13,7 @@
 
 <style lang="scss" scoped>
 
-  .avatar{
+  .avatar-home{
     opacity: 0;
     transform: translateX(-150px);
     position: relative;

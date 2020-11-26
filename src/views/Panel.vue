@@ -1,6 +1,6 @@
 <template>
   <div id="PanelPage">
-    <div v-if="!section" class="empty-block">Панель админа. Выбери раздел слева и редактируй</div>
+    <EmptyBlock v-if="!section" />
 
     <template v-else>
 
@@ -187,10 +187,11 @@
   import CategoriesService from "../services/CategoriesService";
   import VideosService from "../services/VideosService";
   import ScenariosService from "../services/ScenariosService";
+  import EmptyBlock from "@/components/EmptyBlock";
 
   export default {
     name: "Panel",
-    components: {ScenarioEdit, VideoEdit, DocumentEdit, vueDropzone, ckeditor: CKEditor.component},
+    components: {EmptyBlock, ScenarioEdit, VideoEdit, DocumentEdit, vueDropzone, ckeditor: CKEditor.component},
     data: () => ({
       dropOptions: {
         url: "https://httpbin.org/post",
@@ -388,7 +389,7 @@
         margin-bottom: 30px;
 
         p{
-          border-bottom: $border;
+          border-bottom: var(--border-markup);
           width: fit-content;
         }
 

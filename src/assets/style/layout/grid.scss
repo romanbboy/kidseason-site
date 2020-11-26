@@ -1,0 +1,103 @@
+$grid-columns: 12;
+$grid-column-width: 100 / $grid-columns;
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(var(--half-gutter) * -1);
+  margin-right: calc(var(--half-gutter) * -1);
+
+  &:not(.grid--flex) {
+    @supports (display: grid) {
+      display: grid;
+      grid-template-columns: repeat($grid-columns, 1fr);
+      grid-column-gap: var(--gutter);
+      grid-row-gap: var(--row-gutter);
+      margin-left: initial;
+      margin-right: initial;
+
+      @media (max-width: 500px) {
+        grid-column-gap: var(--grid-atom);
+      }
+    }
+  }
+
+  &--no-row-gap:not(.grid--flex) {
+    grid-row-gap: 0;
+  }
+}
+
+.grid-col-gap-normal {
+  grid-column-gap: var(--gutter) !important;
+
+  @media (max-width: 500px) {
+    grid-column-gap: var(--grid-atom) !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .grid-col-gap-md-0 {
+    grid-column-gap: 0 !important;
+  }
+}
+
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    flex: 0 0 ($grid-column-width * $i * 1%);
+    max-width: ($grid-column-width * $i * 1%);
+    padding-left: var(--half-gutter);
+    padding-right: var(--half-gutter);
+    padding-bottom: var(--row-gutter);
+
+    .grid--no-row-gap & {
+      padding-bottom: 0;
+    }
+
+    @media (max-width: 425px) {
+      padding-left: var(--grid-atom);
+      padding-right: var(--grid-atom);
+    }
+
+    .grid:not(.grid--flex) & {
+      @supports (display: grid) {
+        grid-column-end: span $i;
+        padding-left: initial;
+        padding-right: initial;
+        padding-bottom: initial;
+        max-width: initial;
+      }
+    }
+  }
+  .row-#{$i} {
+    grid-row-end: span $i;
+  }
+}
+
+@each $bpName, $bpVal in $breakpoints {
+  @for $i from 1 through $grid-columns {
+    @media (min-width: $bpVal + 1px) {
+      .col-#{$bpName}-#{$i} {
+        flex: 0 0 ($grid-column-width * $i * 1%);
+        max-width: ($grid-column-width * $i * 1%);
+
+        .grid:not(.grid--flex) & {
+          @supports (display: grid) {
+            grid-column-end: span $i;
+            max-width: initial;
+          }
+        }
+      }
+      .row-#{$bpName}-#{$i} {
+        grid-row-end: span $i;
+      }
+    }
+  }
+}
+
+.grid-cross-end {
+  align-items: end;
+}
+
+.grid-self-cross-center {
+  align-self: center;
+}

@@ -1,26 +1,29 @@
 <template>
   <div class="DocumentBlock">
-    <IconBase width="25"
-              height="25"
-              :icon-color="svgColor"
-              view-box="0 0 480 480">
-      <IconDocument />
-    </IconBase>
-    <a :href="document.path" download>{{ document.name }}</a>
+    <span>{{ document.name }}</span>
+
+    <a :href="document.path" download="">
+      <IconBase width="25"
+                height="25"
+                :icon-color="svgColor"
+                view-box="-23 0 512 512.00072">
+        <IconUploadDocument />
+      </IconBase>
+    </a>
   </div>
 </template>
 
 <script>
   import IconBase from "./icons/IconBase";
-  import IconDocument from "./icons/IconDocument";
+  import IconUploadDocument from "./icons/IconUploadDocument";
 
   export default {
     name: "DocumentBlock",
     props: ['document'],
-    components: {IconBase, IconDocument},
+    components: {IconBase, IconUploadDocument},
     data() {
       return {
-        svgColor: '#00565B'
+        svgColor: '#46A4B5'
       }
     }
   }
@@ -28,14 +31,24 @@
 
 <style lang="scss" scoped>
   .DocumentBlock{
+    padding: 10px 20px 5px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 24px var(--plate-shadow);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+    transition: box-shadow .3s;
+    margin-right: 30px;
 
-    a{
-      margin-left: 10px;
-      text-decoration: none;
-      color: $main-color;
+    &:hover{
+      box-shadow: 0 0 12px var(--plate-hover-shadow);
+    }
+
+    span{
+      margin-bottom: 8px;
+      margin-right: 20px;
+      color: var(--palette-1)
     }
   }
 </style>

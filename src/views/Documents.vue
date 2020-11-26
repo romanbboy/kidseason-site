@@ -1,7 +1,7 @@
 <template>
-  <div id="DocumentsPage">
-    <div v-if="!section" class="empty-block">Выберите раздел слева</div>
-    <div v-else class="documents-list">
+  <div class="h100">
+    <EmptyBlock v-if="!section" />
+    <div v-else class="flex">
       <DocumentBlock v-for="doc in documents"
                      :document="doc"
                      :key="doc._id"/>
@@ -13,10 +13,11 @@
   import DocumentsService from '../services/DocumentsService'
 
   import DocumentBlock from "../components/DocumentBlock";
+  import EmptyBlock from "@/components/EmptyBlock";
 
   export default {
     name: "Documents",
-    components: {DocumentBlock},
+    components: {EmptyBlock, DocumentBlock},
     computed: {
       section() {
         return this.$route.params['section'];
@@ -46,13 +47,5 @@
 </script>
 
 <style lang="scss" scoped>
-  #DocumentsPage{
-    height: 100%;
 
-    .documents-list{
-      display: flex;
-      justify-content: space-around;
-      flex-flow: row wrap;
-    }
-  }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div id="ScenarioPage">
-    <div v-if="!section" class="empty-block">Выберите раздел слева</div>
+  <div class="h100">
+    <EmptyBlock v-if="!section" />
     
     <div v-else>
-      <div v-if="!nameScenario" class="scenario-list">
+      <div v-if="!nameScenario" class="flex">
         <ScenarioBlock v-for="el in scenarios"
                        :scenario="el"
                        :key="el._id"/>
@@ -19,10 +19,11 @@
 <script>
   import ScenarioBlock from '../components/ScenarioBlock'
   import ScenariosService from "../services/ScenariosService";
+  import EmptyBlock from "@/components/EmptyBlock";
 
   export default {
     name: "Scenario",
-    components: {ScenarioBlock},
+    components: {EmptyBlock, ScenarioBlock},
     computed: {
       section() {
         return this.$route.params['section'];
@@ -55,13 +56,5 @@
 </script>
 
 <style lang="scss" scoped>
-  #ScenarioPage{
-    height: 100%;
 
-    .scenario-list{
-      display: flex;
-      justify-content: space-around;
-      flex-flow: row wrap;
-    }
-  }
 </style>

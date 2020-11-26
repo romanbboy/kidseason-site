@@ -1,28 +1,28 @@
 <template>
   <div class="ScenarioBlock">
-    <IconBase width="25"
-              height="25"
-              :icon-color="svgColor"
-              view-box="0 0 480 480">
-      <IconDocument />
-    </IconBase>
+    <span>{{ scenario.name }}</span>
 
-    <router-link tag="p"
+    <router-link tag="a"
                  :key="scenario.sign"
                  :to="{name: 'ScenarioFull', params: {section: $route.params['section'], nameScenario: scenario.sign} }">
-      {{ scenario.name }}
+      <IconBase width="22"
+                height="22"
+                :icon-color="svgColor"
+                view-box="0 0 511.999 511.999">
+        <IconEye />
+      </IconBase>
     </router-link>
   </div>
 </template>
 
 <script>
   import IconBase from "./icons/IconBase";
-  import IconDocument from "./icons/IconDocument";
+  import IconEye from "./icons/IconEye";
 
   export default {
     name: "ScenarioBlock",
     props: ['scenario'],
-    components: {IconBase, IconDocument},
+    components: {IconBase, IconEye},
     data() {
       return {
         svgColor: '#00565B'
@@ -33,15 +33,28 @@
 
 <style lang="scss" scoped>
   .ScenarioBlock{
+    padding: 10px 20px 10px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 24px var(--plate-shadow);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+    transition: box-shadow .3s;
+    margin-right: 30px;
 
-    p{
-      margin-left: 10px;
-      text-decoration: none;
-      color: $main-color;
-      cursor: pointer;
+    &:hover{
+      box-shadow: 0 0 12px var(--plate-hover-shadow);
+    }
+
+    span{
+      margin-right: 15px;
+      margin-bottom: 1px;
+      color: var(--palette-1)
+    }
+
+    a{
+      line-height: 0;
     }
   }
 </style>

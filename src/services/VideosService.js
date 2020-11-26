@@ -1,8 +1,8 @@
 import api from './api';
 
 export default {
-  fetchVideos() {
-    return api().get('videos')
+  fetchVideos(limit) {
+    return api().get(`videos${limit ? '/'+limit : ''}`)
   },
   addVideo(params) {
     return api().post('videos', params)

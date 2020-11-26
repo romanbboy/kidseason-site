@@ -1,8 +1,8 @@
 import api from './api'
 
 export default {
-  fetchDocuments () {
-    return api().get('documents')
+  fetchDocuments (limit) {
+    return api().get(`documents${limit ? '/'+limit : ''}`)
   },
   addDocument (params) {
     return api().post('documents', params)

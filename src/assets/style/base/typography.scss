@@ -1,0 +1,202 @@
+a {
+  color: var(--link-color);
+
+  &:hover {
+    color: var(--theme-color-primary)
+  }
+}
+
+p {
+  color: var(--text-color-body);
+  margin: 0 0 1.5em;
+  line-height: 1.75;
+  text-align: justify;
+
+  &.p--compact {
+    line-height: 1.25;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+
+  &:not(:first-child) {
+    margin-top: 2em;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: var(--grid-atom--x4);
+
+    @media (max-width: 1024px) {
+      margin-bottom: var(--grid-atom--x3);
+    }
+  }
+
+  > li {
+    padding: 0 0 0 .9625em;
+    margin: 0 0 1.5em;
+    line-height: 1.75;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.list--inline {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > li {
+      padding: 0 1.5em .5em .9625em;
+    }
+  }
+
+  &.list--compact {
+    &:not(:first-child) {
+      margin-top: 1.25em;
+    }
+
+    & > li {
+      margin: 0 0 .75em;
+      line-height: 1.25;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+ol {
+  margin-left: 1.25em;
+
+  li {
+    padding-left: .5em;
+  }
+}
+
+ul > li {
+  list-style: none;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: .3125em;
+    height: .5em;
+    margin-right: .65em;
+    margin-left: -.9625em;
+    background: url('data:image/svg+xml,%3Csvg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M4.53553 4.70716L1.70711 7.53559C1.31658 7.92612 0.683417 7.92612 0.292893 7.53559C-0.0976311 7.14507 -0.0976311 6.5119 0.292893 6.12138L2.41421 4.00006L0.292893 1.87874C-0.0976311 1.48821 -0.0976311 0.855048 0.292893 0.464524C0.683417 0.0739998 1.31658 0.0739998 1.70711 0.464524L4.53553 3.29295C4.92606 3.68348 4.92606 4.31664 4.53553 4.70716Z" fill="%238B8D8F"/%3E%3C/svg%3E') 50% 50% no-repeat;
+    background-size: contain;
+    transform: translateY(-10%);
+  }
+}
+
+.text-left { text-align: left !important }
+.text-center { text-align: center !important }
+.text-right { text-align: right !important }
+.text-normal { font-weight: 400 !important }
+.text-semibold { font-weight: 500 !important }
+.text-semibold-600 { font-weight: 600 !important }
+.text-bold { font-weight: 700 !important }
+.text-height-140 { line-height: 1.4 !important }
+
+@mixin heading {
+  font-family: var(--cartoon-font-family);
+  font-weight: 700;
+  color: var(--text-color-heading);
+  line-height: 1.25;
+  padding: 0;
+  margin: 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+@mixin h1 {
+  font-size: 56px;
+  margin-bottom: var(--grid-atom--x5);
+  @media (max-width: 1024px) { font-size: 46px }
+  @media (max-width: 768px) { font-size: 37px }
+  @media (max-width: 320px) { font-size: 32px }
+}
+
+@mixin h2 {
+  font-size: 45px;
+  margin-bottom: var(--grid-atom--x4);
+  @media (max-width: 1024px) { font-size: 38px }
+  @media (max-width: 768px) { font-size: 32px }
+  @media (max-width: 320px) { font-size: 28px }
+}
+
+@mixin h3 {
+  font-size: 32px;
+  margin-bottom: var(--grid-atom--x4);
+  @media (max-width: 1024px) { font-size: 30px }
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: var(--grid-atom--x3);
+  }
+  @media (max-width: 320px) { font-size: 24px }
+}
+
+@mixin h4 {
+  font-size: 28px;
+  margin-bottom: var(--grid-atom--x2);
+  @media (max-width: 1024px) { font-size: 24px }
+  @media (max-width: 768px) { font-size: 22px }
+  @media (max-width: 320px) { font-size: 18px }
+}
+
+@mixin reset-headings {
+  h1,h2,h3,h4,h5,h6 {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    text-transform: inherit;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+h1,h2,h3,h4,h5,h6 {
+  @include heading;
+}
+
+h1 { @include h1 }
+h2 { @include h2 }
+h3 { @include h3 }
+h4,h5,h6 { @include h4 }
+
+.heading {
+  @include heading;
+
+  &--h1 { @include h1 }
+  &--h2 { @include h2 }
+  &--h3 { @include h3 }
+
+  &--h4,
+  &--h5,
+  &--h6 {
+    @include h4;
+  }
+
+  @include reset-headings;
+}
+
+.sub-heading {
+  font-family: var(--cartoon-font-family);
+  font-size: 28px;
+  line-height: 1.43;
+  margin-bottom: var(--grid-atom--x3);
+
+  @include reset-headings;
+}

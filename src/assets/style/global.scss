@@ -1,7 +1,15 @@
-@import 'fonts';
-@import 'variables';
-@import 'helper';
+@import 'base/fonts';
+@import 'base/variables';
+@import 'base/typography';
+@import 'base/common-main';
 
-@import 'common-main';
-@import 'transitions';
-@import 'animations';
+@import 'layout/grid';
+
+@import 'helpers/transitions';
+@import 'helpers/animations';
+@import 'helpers/colors';
+@import 'helpers/flex';
+@import 'helpers/spacing';
+@import 'helpers/sizing';
+@import 'helpers/visibility';
+@import 'helpers/elements';

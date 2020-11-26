@@ -1,0 +1,66 @@
+$breakpoints: (
+  "xs": 320px, // Mobile S
+  "sm": 425px, // Mobile L
+  "md": 768px, // Tablet
+  "lg": 1024px, // Laptop
+  "xl": 1200px
+);
+
+@mixin primary-theme {
+  /**
+   * Palette
+   */
+  --palette-1: #EC4D77;
+  --palette-2: #9D649D;
+  --palette-3: #DB6814;
+  --palette-4: #FEFE00;
+  --palette-5: #46A4B5;
+  --palette-6: #F37D4A;
+  --palette-7: #262626;
+  --palette-8: #000;
+  --palette-9: rgba(234, 234, 234, 0.7);
+  --palette-10: #E2E2E2;
+  --palette-gradient-1: linear-gradient(to right, rgba(175, 167, 227, 0.98), rgba(211, 255, 232, 0.8));
+  --palette-gradient-2: linear-gradient(90deg, #b9deed, #efefef);
+
+  /**
+   * Sizing
+   */
+  --content-width: 1440px;
+  --grid-atom: 8px;
+
+  @for $i from 2 through 15 {
+    --grid-atom--x#{$i}: calc(var(--grid-atom) * #{$i});
+  }
+
+  --gutter: 30px;
+  --half-gutter: var(--grid-atom--x2);
+  --double-gutter: var(--grid-atom--x8);
+  --row-gutter: var(--gutter);
+
+  /**
+   * Borders
+   */
+  --border-markup: 2px solid var(--palette-2);
+
+
+
+  /**
+   * Theme props
+   */
+  --main-font-family: OpenSans, Arial, sans-serif;
+  --cartoon-font-family: Kosko, Arial, sans-serif;
+
+  --text-color-body: var(--palette-7);
+  --text-color-heading: var(--palette-8);
+  --link-color: var(--palette-5);
+  --link-color-hover: var(--palette-1);
+  --theme-color-primary: var(--palette-1);
+
+  --plate-shadow: var(--palette-9);
+  --plate-hover-shadow: var(--palette-10);
+}
+
+:root {
+  @include primary-theme;
+}

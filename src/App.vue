@@ -55,7 +55,7 @@
   $main-gradient: linear-gradient(to right, rgba(175, 167, 227, 0.98), rgba(211, 255, 232, 0.8));
 
   &.Bg-Home{
-    background-image: $main-gradient, url('./assets/img/bg/bg_home.jpg');
+    background: $main-gradient, url('./assets/img/bg/mainBG.png') repeat;
   }
   &.Bg-Video{
     background-image: $main-gradient, url('./assets/img/bg/bg_video.jpg');

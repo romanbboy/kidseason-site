@@ -7,11 +7,8 @@
       </div>
 
       <button v-if="!edit" @click="edit = true"
-              class="button button_empty">
-        <IconBase view-box="0 0 468.295 468.295"
-                  width="15"
-                  height="15"
-        >
+              class="btn--tiny">
+        <IconBase view-box="0 0 468.295 468.295" width="15" height="15">
           <IconPen />
         </IconBase>
       </button>

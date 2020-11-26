@@ -38,7 +38,7 @@
 header{
   padding: 15px 0;
   background: linear-gradient(135deg, rgba(175, 167, 227, 0.8), rgba(211, 255, 232, 0.7));
-  border-bottom: 2px solid $color-purple;
+  border-bottom: var(--border-markup);
   height: 130px;
 }
 .header{

@@ -1,0 +1,9 @@
+// color text
+.color{
+  &-pink { color: var(--palette-1); }
+  &-purple { color: var(--palette-2); }
+  &-orange { color: var(--palette-6); }
+  &-dark-orange { color: var(--palette-3); }
+  &-yellow { color: var(--palette-4); }
+  &-blue { color: var(--palette-5); }
+}

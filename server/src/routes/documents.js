@@ -7,11 +7,22 @@ const Document = require('../models/document-model');
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  Document.find({}, 'id name section path', (err, documents) => {
-    if (err) res.sendStatus(500);
-    else res.send({ documents })
-  });
+router.get('/:limit?', (req, res) => {
+  if(req.params.limit){
+    Document
+      .find({}, 'id name section path')
+      .sort({'_id': -1})
+      .limit(+req.params.limit)
+      .exec(function(err, documents) {
+        if (err) res.sendStatus(500);
+        else res.send({ documents })
+      });
+  } else {
+    Document.find({}, 'id name section path', (err, documents) => {
+      if (err) res.sendStatus(500);
+      else res.send({ documents })
+    });
+  }
 });
 
 router.post('/', fileMiddleware.single('file'), (req, res) => {

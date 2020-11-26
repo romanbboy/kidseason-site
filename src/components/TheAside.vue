@@ -1,5 +1,5 @@
 <template>
-  <aside :class="{hide: !aside.show}">
+  <aside :class="{hide_aside: !aside.show}">
     <div v-if="aside.show && $route.name !== 'Panel'" class="aside-list">
       <transition-group name="slide-fade"
                         @before-enter="animBeforeEnter"
@@ -35,11 +35,6 @@
   export default {
     name: "TheAside",
     components: {BurgerIcon},
-    data() {
-      return {
-        // show: this.$store.getters.aside.show
-      }
-    },
     computed: {
       aside() {
         return this.$store.getters.aside;
@@ -63,15 +58,14 @@
 aside{
   flex: 300px 0 0;
   min-height: 100%;
-  border-right: $border;
-  border-width: 3px;
+  border-right: var(--border-markup);
   padding: 20px;
   display: flex;
   align-items: center;
   position: relative;
   transition: all 0s;
 
-  &.hide{
+  &.hide_aside{
     flex: 0;
     border-width: 0;
     transition: all .5s;
@@ -86,16 +80,36 @@ aside{
     
     li{
       display: block;
-      padding: 0;
-      list-style: none;
-      font-family: 'Kosko';
-      font-size: 18px;
-      margin-bottom: 10px;
+      font-family: var(--cartoon-font-family);
+      font-size: 1.25rem;
       letter-spacing: 1px;
       cursor: pointer;
+      padding: 12px 0;
+      text-align: center;
+      position: relative;
+
+      &:before{
+        @include pseudo;
+        left: calc(50% - 10px);
+        width: 20px;
+        height: 2px;
+        background-color: var(--palette-2);
+      }
+
+      &:last-child{
+        &:after{
+          @include pseudo;
+          left: calc(50% - 10px);
+          width: 20px;
+          height: 2px;
+          background-color: var(--palette-2);
+          top: inherit;
+          bottom: 0;
+        }
+      }
 
       &.active{
-        color: $main-color;
+        color: var(--link-color-hover);
       }
     }
   }

@@ -4,11 +4,22 @@ const Video = require('../models/video-model');
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  Video.find({}, 'id name section link', (err, videos) => {
-    if (err) res.sendStatus(500);
-    else res.send({ videos })
-  });
+router.get('/:limit?', (req, res) => {
+  if(req.params.limit){
+    Video
+      .find({}, 'id name section link')
+      .sort({'_id': -1})
+      .limit(+req.params.limit)
+      .exec(function(err, videos) {
+        if (err) res.sendStatus(500);
+        else res.send({ videos })
+      });
+  } else {
+    Video.find({}, 'id name section link', (err, videos) => {
+      if (err) res.sendStatus(500);
+      else res.send({ videos })
+    });
+  }
 });
 
 router.post('/', (req, res) => {

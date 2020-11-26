@@ -5,11 +5,22 @@ const Scenario = require('../models/scenario-model');
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  Scenario.find({}, 'id name sign section content', (err, scenarios) => {
-    if (err) res.sendStatus(500);
-    else res.send({ scenarios })
-  });
+router.get('/:limit?', (req, res) => {
+  if(req.params.limit){
+    Scenario
+      .find({}, 'id name sign section content')
+      .sort({'_id': -1})
+      .limit(+req.params.limit)
+      .exec(function(err, scenarios) {
+        if (err) res.sendStatus(500);
+        else res.send({ scenarios })
+      });
+  } else {
+    Scenario.find({}, 'id name sign section content', (err, scenarios) => {
+      if (err) res.sendStatus(500);
+      else res.send({ scenarios })
+    });
+  }
 });
 
 router.post('/', (req, res) => {

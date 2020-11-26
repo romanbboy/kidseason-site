@@ -1,0 +1,76 @@
+@mixin pseudo{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+@mixin half-gutter {
+  max-width: calc(var(--content-width) + var(--gutter));
+  padding: 0 var(--half-gutter);
+}
+
+// Wrapper
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  position: relative;
+}
+
+
+// Section
+.section {
+  padding-top: var(--grid-atom--x7);
+  padding-bottom: var(--grid-atom--x7);
+
+  @media (max-width: 1024px) {
+    padding-top: var(--grid-atom--x5);
+    padding-bottom: var(--grid-atom--x5);
+  }
+
+  @media (max-width: 768px) {
+    padding-top: var(--grid-atom--x4);
+    padding-bottom: var(--grid-atom--x4);
+  }
+}
+
+// Container
+.container {
+  width: 100%;
+  max-width: calc(var(--content-width) + var(--double-gutter));
+  padding: 0 var(--gutter);
+  margin: 0 auto;
+
+  @media (max-width: 320px) {
+    @include half-gutter;
+  }
+
+  &--half-gutter {
+    @include half-gutter;
+  }
+}
+
+
+// Border
+.border-bottom{
+  &--blue{
+    border-bottom: 1px dashed var(--palette-5)
+  }
+}
+
+// Button
+.btn{
+  &--tiny{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    line-height: 0;
+  }
+}

@@ -1,0 +1,40 @@
+.flex { display: flex }
+@media (min-width: 426px) {
+  .flex-sm { display: flex }
+}
+@media (min-width: 769px) {
+  .flex-md { display: flex }
+}
+@media (min-width: 1025px) {
+  .flex-lg { display: flex }
+}
+
+.flex-column { display: flex; flex-direction: column }
+.flex-wrap { flex-wrap: wrap }
+.flex-none { flex: none !important }
+.flex-grow { flex-grow: 1 }
+.flex-main-center { justify-content: center }
+.flex-main-between { justify-content: space-between }
+.flex-main-around { justify-content: space-around }
+.flex-cross-center { align-items: center }
+.flex-cross-baseline { align-items: baseline }
+.flex-cross-start { align-items: flex-start }
+.flex-cross-end { align-items: flex-end }
+.flex-self-stretch { align-self: stretch }
+
+@media (min-width: 1025px) {
+  .flex-lg-self-stretch { align-self: stretch }
+}
+
+// todo: move to separate file & generate values
+.order-1 { order: 1 }
+.order-2 { order: 2 }
+
+@media (min-width: 1201px) {
+  .order-xl-1 { order: 1 }
+  .order-xl-2 { order: 2 }
+}
+
+@media (min-width: 426px) {
+  .flex-sm-cross-end { align-items: flex-end }
+}

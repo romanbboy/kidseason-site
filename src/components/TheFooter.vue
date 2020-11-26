@@ -18,7 +18,7 @@
     align-items: center;
     font-size: 20px;
     font-family: 'Kosko';
-    border-top: $border;
+    border-top: var(--border-markup);
     background: linear-gradient(45deg, rgba(175, 167, 227, 0.8), rgba(211, 255, 232, 0.7));
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <div id="VideoPage">
-    <div v-if="!section" class="empty-block">Выберите раздел слева</div>
-    <div v-else class="video-list">
+  <div class="h100">
+    <EmptyBlock v-if="!section" />
+    <div v-else class="flex flex-main-around">
       <VideoBlock v-for="video in videos"
                 :video="video"
                 :key="video._id"/>
@@ -12,10 +12,11 @@
 <script>
   import VideoBlock from "../components/VideoBlock";
   import VideosService from "../services/VideosService";
+  import EmptyBlock from "@/components/EmptyBlock";
 
   export default {
     name: "Video",
-    components: {VideoBlock},
+    components: {EmptyBlock, VideoBlock},
     computed: {
       section() {
         return this.$route.params['section'];
@@ -45,13 +46,5 @@
 </script>
 
 <style lang="scss" scoped>
-  #VideoPage{
-    height: 100%;
 
-    .video-list{
-      display: flex;
-      justify-content: space-around;
-      flex-flow: row wrap;
-    }
-  }
 </style>
