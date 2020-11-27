@@ -1,6 +1,6 @@
 <template>
   <div class="scenario-content">
-    <p class="bigP">{{ scene.name }}</p>
+    <h3 class="mb-3 text-center">{{ scene.name }}</h3>
     <div v-html="scene.content"></div>
   </div>
 </template>
@@ -8,21 +8,19 @@
 <script>
   export default {
     name: "ScenarioFull",
-    data() {
-      return {
-        scene: this.$store.getters.getScenario(this.$route.params['nameScenario'])
+    computed: {
+      scene() {
+        if(this.$store.getters.allScenarios.length) {
+          this.$store.dispatch('showAside', false)
+          return this.$store.getters.getScenario(this.$route.params['nameScenario'])
+        } else {
+          return {name: '', content: ''}
+        }
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .scenario-content{
-    .bigP{
-      margin: 20px;
-      font-size: 26px;
-      font-family: 'Kosko';
-      text-align: center;
-    }
-  }
+
 </style>

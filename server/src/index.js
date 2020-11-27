@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const history = require('connect-history-api-fallback');
 const config = require('./config/config');
 
 const documentsRouter = require('./routes/documents');
@@ -13,6 +14,7 @@ const scenariosRouter = require('./routes/scenarios');
 const app = express();
 
 // utils
+app.use(history());
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());

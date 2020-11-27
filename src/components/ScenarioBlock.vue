@@ -4,7 +4,7 @@
 
     <router-link tag="a"
                  :key="scenario.sign"
-                 :to="{name: 'ScenarioFull', params: {section: $route.params['section'], nameScenario: scenario.sign} }">
+                 :to="{name: 'ScenarioFull', params: {section: scenario.section, nameScenario: scenario.sign} }">
       <IconBase width="22"
                 height="22"
                 :icon-color="svgColor"

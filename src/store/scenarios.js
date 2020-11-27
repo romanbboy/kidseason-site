@@ -22,7 +22,7 @@ export default {
       return state.scenarios.filter(el => el.section === section)
     },
     getScenario: state => sign => {
-      return state.scenarios.find(el => el.sign === sign) || router.push('/');
+      return state.scenarios.find(el => el.sign === sign);
     }
   }
 }
