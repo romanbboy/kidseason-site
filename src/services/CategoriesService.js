@@ -2,9 +2,9 @@ import api from './api'
 
 export default {
   fetchCategories () {
-    return api().get('categories')
+    return api().get('api/categories')
   },
   addCategory (params) {
-    return api().post('categories', params)
+    return api().post('api/categories', params)
   }
 }

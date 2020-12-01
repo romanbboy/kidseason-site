@@ -2,15 +2,15 @@ import api from './api';
 
 export default {
   fetchScenarios(limit) {
-    return api().get(`scenarios${limit ? '/'+limit : ''}`)
+    return api().get(`api/scenarios${limit ? '/'+limit : ''}`)
   },
   addScenario(params) {
-    return api().post('scenarios', params)
+    return api().post('api/scenarios', params)
   },
   updateScenario (params) {
-    return api().put(`scenarios/${params.id}`, params)
+    return api().put(`api/scenarios/${params.id}`, params)
   },
   deleteScenario (id) {
-    return api().delete(`scenarios/${id}`)
+    return api().delete(`api/scenarios/${id}`)
   }
 }

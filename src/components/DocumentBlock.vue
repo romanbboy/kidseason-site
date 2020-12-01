@@ -2,7 +2,7 @@
   <div class="DocumentBlock">
     <span>{{ document.name }}</span>
 
-    <a :href="document.path" download="">
+    <a :href="document.path" download>
       <IconBase width="25"
                 height="25"
                 :icon-color="svgColor"

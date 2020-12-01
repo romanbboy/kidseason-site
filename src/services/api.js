@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 export default () => {
-  const instance =  axios.create({
-    baseURL: 'http://localhost:8081'
-  });
+  const baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : 'https://kidseason.ru/';
+  const instance =  axios.create({baseURL});
 
   instance.interceptors.request.use(function (config) {
     document.getElementById('loader').style.display = 'flex';
