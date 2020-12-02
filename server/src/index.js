@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const history = require('connect-history-api-fallback');
-require('dotenv').config();
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 
 const documentsRouter = require('./routes/documents');
 const categoriesRouter = require('./routes/categories');
