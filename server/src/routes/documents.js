@@ -34,7 +34,7 @@ router.post('/', fileMiddleware.single('file'), (req, res) => {
     return;
   }
   
-  let pathFile = `files/${req.file.filename}`;
+  let pathFile = `/files/${req.file.filename}`;
 
   const document = new Document({
     name: req.body.name,

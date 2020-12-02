@@ -24,6 +24,9 @@ app.use('/api/categories', categoriesRouter);
 app.use('/api/videos', videosRouter);
 app.use('/api/scenarios', scenariosRouter);
 
+// Скачивать файлы, для прода работает
+// p.s для дев качать так http://localhost:8081/files/.......
+app.use('/files', express.static(path.join(__dirname, '../files/')));
 
 app.use(history());
 app.use(express.static(path.join(__dirname, '../../dist/')));
