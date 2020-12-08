@@ -88,26 +88,6 @@ aside{
       text-align: center;
       position: relative;
 
-      &:before{
-        @include pseudo;
-        left: calc(50% - 10px);
-        width: 20px;
-        height: 2px;
-        background-color: var(--palette-2);
-      }
-
-      &:last-child{
-        &:after{
-          @include pseudo;
-          left: calc(50% - 10px);
-          width: 20px;
-          height: 2px;
-          background-color: var(--palette-2);
-          top: inherit;
-          bottom: 0;
-        }
-      }
-
       &.active{
         color: var(--link-color-hover);
       }

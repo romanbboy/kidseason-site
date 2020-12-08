@@ -372,10 +372,10 @@
         if(toR.params['section'] === 'scenario') this.getScenarios();
       }
     },
-    created() {
-      // let password = md5(prompt('Введи пароль'));
-      // qaz123wsx
-      // if(password !== '2ee90831762b966e9fa6ef28cb501032') this.$router.push('/');
+    beforeCreate() {
+      let password = md5(prompt('Введи пароль'));
+      // qaz123wsxLorka
+      if(password !== '1401eee95caf8ed45464912964da645b') this.$router.push('/');
     }
   }
 </script>
