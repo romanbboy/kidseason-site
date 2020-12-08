@@ -1,9 +1,10 @@
 const multer = require('multer');
+const path = require('path');
 const {slugify} = require('transliteration');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'files')
+    cb(null, path.resolve(__dirname, '../../files'))
   },
   filename(req, file, cb) {
     cb(null, slugify(file.originalname, { lowercase: false, separator: '_' }))
