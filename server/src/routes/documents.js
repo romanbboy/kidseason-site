@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const fs = require('fs');
+const path = require('path');
 
 const fileMiddleware = require('../middleware/file');
 
@@ -79,9 +80,11 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   Document.findById(req.params.id, 'name path section', (err, document) => {
-    fs.stat(document.path, function(err, stats) {
+    let realPathFile = path.resolve(__dirname, `../..${document.path}`);
+
+    fs.stat(realPathFile, function(err, stats) {
       if (err) console.log("Файл не найден");
-      else fs.unlinkSync(document.path);
+      else fs.unlinkSync(realPathFile);
     });
     document.remove({ _id: req.params.id }, err => {
       if (err) res.send({success: false, message: `Не получилось удалить. Ошибка: ${err.code}`});
