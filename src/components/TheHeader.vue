@@ -9,13 +9,13 @@
         <router-link tag="li" class="nav-item" exact to="/" active-class="active">
           <a class="nav-link">Главная</a>
         </router-link>
-        <router-link tag="li" class="nav-item" to="/documents" active-class="active">
+        <router-link tag="li" class="nav-item" to="/documents" active-class="active" v-if="lastDocuments.length">
           <a class="nav-link">Документы</a>
         </router-link>
-        <router-link tag="li" class="nav-item" to="/video" active-class="active">
+        <router-link tag="li" class="nav-item" to="/video" active-class="active" v-if="lastVideos.length">
           <a class="nav-link">Видео</a>
         </router-link>
-        <router-link tag="li" class="nav-item" to="/scenario" active-class="active">
+        <router-link tag="li" class="nav-item" to="/scenario" active-class="active" v-if="lastScenarios.length">
           <a class="nav-link">Сценарии</a>
         </router-link>
       </nav>
@@ -25,11 +25,30 @@
 
 <script>
   import LogoName from '@/components/LogoName.vue'
+  import DocumentsService from "@/services/DocumentsService";
+  import VideosService from "@/services/VideosService";
+  import ScenariosService from "@/services/ScenariosService";
 
   export default {
     name: "TheHeader",
     components: {
       vLogoName: LogoName
+    },
+    data() {
+      return {
+        lastDocuments: [],
+        lastVideos: [],
+        lastScenarios: [],
+      }
+    },
+    async mounted() {
+      const lastDocuments = await DocumentsService.fetchDocuments(5);
+      const lastVideos = await VideosService.fetchVideos(3);
+      const lastScenarios = await ScenariosService.fetchScenarios(5);
+
+      this.lastDocuments = lastDocuments.data.documents;
+      this.lastVideos = lastVideos.data.videos;
+      this.lastScenarios = lastScenarios.data.scenarios;
     }
   }
 </script>

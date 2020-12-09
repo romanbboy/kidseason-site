@@ -25,19 +25,19 @@
 
     <section>
       <div class="container">
-        <div class="mv-5 pb-5 border-bottom--blue">
+        <div class="mv-5 pb-5 border-bottom--blue" v-if="lastDocuments.length">
           <h2>Последние документы</h2>
           <div class="flex">
             <DocumentBlock v-for="doc in lastDocuments" :document="doc" :key="doc._id"/>
           </div>
         </div>
-        <div class="mv-5 pb-5 border-bottom--blue">
+        <div class="mv-5 pb-5 border-bottom--blue" v-if="lastVideos.length">
           <h2>Последние видео</h2>
           <div class="flex flex-main-between">
             <VideoBlock v-for="video in lastVideos" :video="video" :key="video._id"/>
           </div>
         </div>
-        <div class="mv-5 pb-5">
+        <div class="mv-5 pb-5" v-if="lastScenarios.length">
           <h2>Последние сценарии</h2>
           <div class="flex">
             <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :key="el._id"/>
