@@ -1,15 +1,22 @@
 <template>
   <div class="VideoBlock">
-    <iframe :src="video.link" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe :src="srcVideo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <p>{{ video.name }}</p>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "VideoBlock",
-    props: ['video']
+import {getUrlParam} from '@/utils/getUrlParameter';
+
+export default {
+  name: "VideoBlock",
+  props: ['video'],
+  computed: {
+    srcVideo() {
+      return `https://www.youtube.com/embed/${getUrlParam('v', this.video.link)}`
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
