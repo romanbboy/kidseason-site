@@ -18,6 +18,9 @@
         <router-link tag="li" class="nav-item" to="/scenario" active-class="active" v-if="lastScenarios.length">
           <a class="nav-link">Сценарии</a>
         </router-link>
+        <router-link tag="li" class="nav-item" to="/photo" active-class="active" v-if="lastPhotos.length">
+          <a class="nav-link">Фото</a>
+        </router-link>
       </nav>
     </div>
   </header>
@@ -28,6 +31,7 @@
   import DocumentsService from "@/services/DocumentsService";
   import VideosService from "@/services/VideosService";
   import ScenariosService from "@/services/ScenariosService";
+  import PhotosService from "@/services/PhotosService";
 
   export default {
     name: "TheHeader",
@@ -39,16 +43,19 @@
         lastDocuments: [],
         lastVideos: [],
         lastScenarios: [],
+        lastPhotos: [],
       }
     },
     async mounted() {
       const lastDocuments = await DocumentsService.fetchDocuments(5);
       const lastVideos = await VideosService.fetchVideos(3);
       const lastScenarios = await ScenariosService.fetchScenarios(5);
+      const lastPhotos = await PhotosService.fetchPhotos(5);
 
       this.lastDocuments = lastDocuments.data.documents;
       this.lastVideos = lastVideos.data.videos;
       this.lastScenarios = lastScenarios.data.scenarios;
+      this.lastPhotos = lastPhotos.data.photos;
     }
   }
 </script>

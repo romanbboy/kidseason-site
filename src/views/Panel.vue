@@ -34,7 +34,7 @@
         <p class="bigP fz-24 ff-kosko tac mb-20">Документы</p>
 
         <div class="form-add form-add_document">
-          <p class="fz-20 mb-20 tac curpointer" @click="formAddDocument.show = !formAddDocument.show">Добавить документ</p>
+          <h4 class="fz-20 mb-20 text-center cursor-pointer" @click="formAddDocument.show = !formAddDocument.show">Добавить документ</h4>
 
           <form id="form-documents" v-if="formAddDocument.show">
             <div class="form-control">
@@ -86,7 +86,7 @@
         <p class="bigP fz-24 ff-kosko tac mb-20">Видео</p>
 
         <div class="form-add form-add_video">
-          <p class="fz-20 mb-20 tac curpointer" @click="formAddVideo.show = !formAddVideo.show">Добавить видео</p>
+          <h4 class="fz-20 mb-20 text-center cursor-pointer" @click="formAddVideo.show = !formAddVideo.show">Добавить видео</h4>
 
           <form id="form-video" v-if="formAddVideo.show">
             <div class="form-control">
@@ -130,7 +130,7 @@
         <p class="bigP fz-24 ff-kosko tac mb-20">Сценарии</p>
 
         <div class="form-add form-add_scenario">
-          <p class="fz-20 mb-20 tac curpointer" @click="formAddScenario.show = !formAddScenario.show">Добавить сценарий</p>
+          <h4 class="fz-20 mb-20 text-center cursor-pointer" @click="formAddScenario.show = !formAddScenario.show">Добавить сценарий</h4>
 
           <form id="form-scenario" v-if="formAddScenario.show">
             <div class="form-control">
@@ -169,6 +169,53 @@
         </div>
       </div>
 
+      <!--PHOTO-->
+      <div v-if="section === 'photo'" class="photo-block">
+        <h3 class="text-center">Фото</h3>
+
+        <div class="form-add form-add_photo">
+          <h4 class="fz-20 mb-20 text-center cursor-pointer" @click="formAddPhoto.show = !formAddPhoto.show">Добавить фото</h4>
+
+          <form id="form-photo" v-if="formAddPhoto.show">
+            <div class="form-control">
+              <label>Категория</label>
+              <select v-model="formAddPhoto.section">
+                <option disabled value="">Выберите один из вариантов</option>
+                <option v-for="el in categories" :value="el.name">{{ el.fullName }}</option>
+              </select>
+            </div>
+            <div class="form-control">
+              <label>Загрузить файлы</label>
+              <vue-dropzone id="dropzone_photo"
+                            ref="dropzone_photo"
+                            @vdropzone-success="addedPhotosDropZone"
+                            @vdropzone-error="addedPhotosDropZoneError"
+                            :useCustomSlot="true"
+                            :options="{url: 'https://httpbin.org/post'}">
+                Мамочка, нажми сюда и можешь выбрать несколько файлов
+              </vue-dropzone>
+            </div>
+
+            <i>Разрешенные форматы: <b>jpg, jpeg, png</b></i>
+            <div class="actions">
+              <button type="submit" @click.prevent="addPhoto">Добавить</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-category">
+          <div class="pc-wrap" v-for="(el, i) in photos" :key="i">
+            <p class="fz-20">{{ el.name }}</p>
+            <div class="list">
+              <PhotoEdit v-for="photo in el.listPhotos"
+                         @update-photos="getPhotos"
+                         :photo="photo"
+                         :key="photo._id" />
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     </template>
   </div>
@@ -187,11 +234,13 @@
   import CategoriesService from "../services/CategoriesService";
   import VideosService from "../services/VideosService";
   import ScenariosService from "../services/ScenariosService";
+  import PhotosService from "../services/PhotosService";
   import EmptyBlock from "@/components/EmptyBlock";
+  import PhotoEdit from "@/components/PhotoEdit";
 
   export default {
     name: "Panel",
-    components: {EmptyBlock, ScenarioEdit, VideoEdit, DocumentEdit, vueDropzone, ckeditor: CKEditor.component},
+    components: {PhotoEdit, EmptyBlock, ScenarioEdit, VideoEdit, DocumentEdit, vueDropzone, ckeditor: CKEditor.component},
     data: () => ({
       dropOptions: {
         url: "https://httpbin.org/post",
@@ -217,7 +266,12 @@
         content: '',
         name: '',
         section: ''
-      }
+      },
+      formAddPhoto: {
+        show: false,
+        photos: [],
+        section: ''
+      },
     }),
     computed: {
       section() {
@@ -248,6 +302,14 @@
         return categories.map(el => ({
             name: this.$store.getters.getFullNameCategory(el),
             listScenarios: this.$store.getters.scenariosCategory(el)
+        }))
+      },
+      photos() {
+        let allPhotos = this.$store.getters.allPhotos;
+        let categories = [...new Set(allPhotos.map(item => item.section))];
+        return categories.map(el => ({
+          name: this.$store.getters.getFullNameCategory(el),
+          listPhotos: this.$store.getters.photosCategory(el)
         }))
       },
     },
@@ -313,6 +375,45 @@
         alert('Мам, ты не можешь загрузить больше одного файла. Либо случилась ошибка. Перезагрузи страницу и попробуй еще раз');
       },
 
+      // photo
+      async addPhoto() {
+        if (this.formAddPhoto.section !== '' && this.formAddPhoto.photos.length) {
+          let formData = new FormData();
+          formData.append('section', this.formAddPhoto.section);
+
+          this.formAddPhoto.photos.forEach(el => {
+            formData.append('photos[]', el);
+          })
+
+          let res = await PhotosService.addPhoto(formData);
+
+          alert(res.data.message);
+
+          this.$refs.dropzone_photo.removeAllFiles();
+          this.$refs.dropzone_photo.enable();
+          this.formAddPhoto.files = [];
+
+          if(res.data.success){
+            this.formAddPhoto.section = '';
+            this.getPhotos();
+          }
+        }
+        else alert('Заполни все поля и добавь фоточки')
+      },
+      async getPhotos() {
+        const response = await PhotosService.fetchPhotos();
+        await this.$store.dispatch('setPhotos', response.data.photos);
+      },
+      addedPhotosDropZone(file) {
+        if(file.status === 'success'){
+          this.formAddPhoto.photos.push(file);
+        }
+        else alert('Случилась ошибка');
+      },
+      addedPhotosDropZoneError() {
+        alert('Случилась ошибка. Перезагрузи страницу и попробуй еще раз');
+      },
+
       // videos
       async addVideo() {
         if (this.formAddVideo.name !== ''
@@ -370,12 +471,13 @@
         if(toR.params['section'] === 'documents') this.getDocuments();
         if(toR.params['section'] === 'video') this.getVideos();
         if(toR.params['section'] === 'scenario') this.getScenarios();
+        if(toR.params['section'] === 'photo') this.getPhotos();
       }
     },
     beforeCreate() {
-      let password = md5(prompt('Введи пароль'));
+      // let password = md5(prompt('Введи пароль'));
       // qaz123wsxLorka
-      if(password !== '1401eee95caf8ed45464912964da645b') this.$router.push('/');
+      // if(password !== '1401eee95caf8ed45464912964da645b') this.$router.push('/');
     }
   }
 </script>

@@ -33,7 +33,7 @@
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastVideos.length">
           <h2>Последние видео</h2>
-          <div class="flex flex-main-between">
+          <div class="flex flex-main-around">
             <VideoBlock v-for="video in lastVideos" :video="video" :key="video._id"/>
           </div>
         </div>

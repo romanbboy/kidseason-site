@@ -38,6 +38,12 @@ const routes = [
     ]
   },
   {
+    path: '/photo/:section?',
+    name: 'Photo',
+    component: () => import(/* webpackChunkName: "video" */ '../views/Photo.vue'),
+    meta: {title: 'Фото'}
+  },
+  {
     path: '/panel/:section?',
     name: 'Panel',
     component: () => import(/* webpackChunkName: "panel" */ '../views/Panel.vue'),

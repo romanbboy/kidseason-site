@@ -21,6 +21,7 @@
       <router-link tag="li" class="nav-item" to="/panel/documents" active-class="active">Документы</router-link>
       <router-link tag="li" class="nav-item" to="/panel/video" active-class="active">Видео</router-link>
       <router-link tag="li" class="nav-item" to="/panel/scenario" active-class="active">Сценарии</router-link>
+      <router-link tag="li" class="nav-item" to="/panel/photo" active-class="active">Фото</router-link>
     </div>
 
     <div class="aside-burger" @click="showAside">

@@ -11,6 +11,7 @@ const documentsRouter = require('./routes/documents');
 const categoriesRouter = require('./routes/categories');
 const videosRouter = require('./routes/videos');
 const scenariosRouter = require('./routes/scenarios');
+const photosRouter = require('./routes/photos');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/documents', documentsRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/videos', videosRouter);
 app.use('/api/scenarios', scenariosRouter);
+app.use('/api/photos', photosRouter);
 
 // Скачивать файлы, для прода работает
 // p.s для дев качать так http://localhost:8081/files/.......
