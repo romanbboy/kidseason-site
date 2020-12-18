@@ -31,16 +31,22 @@
             <DocumentBlock v-for="doc in lastDocuments" :document="doc" :key="doc._id"/>
           </div>
         </div>
+        <div class="mv-5 pb-5 border-bottom--blue" v-if="lastScenarios.length">
+          <h2>Последние сценарии</h2>
+          <div class="flex">
+            <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :key="el._id"/>
+          </div>
+        </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastVideos.length">
           <h2>Последние видео</h2>
           <div class="flex flex-main-around">
             <VideoBlock v-for="video in lastVideos" :video="video" :key="video._id"/>
           </div>
         </div>
-        <div class="mv-5 pb-5" v-if="lastScenarios.length">
-          <h2>Последние сценарии</h2>
-          <div class="flex">
-            <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :key="el._id"/>
+        <div class="mv-5 pb-5" v-if="lastPhotos.length">
+          <h2>Последние фото</h2>
+          <div class="flex flex-main-around flex-cross-center">
+            <PhotoBlock v-for="photo in lastPhotos" :photo="photo" :key="photo._id"/>
           </div>
         </div>
       </div>
@@ -58,10 +64,13 @@ import ScenariosService from "@/services/ScenariosService";
 import DocumentBlock from "@/components/DocumentBlock";
 import VideoBlock from "@/components/VideoBlock";
 import ScenarioBlock from "@/components/ScenarioBlock";
+import PhotosService from "@/services/PhotosService";
+import PhotoBlock from "@/components/PhotoBlock";
 
 export default {
   name: 'Home',
   components: {
+    PhotoBlock,
     ScenarioBlock,
     VideoBlock,
     DocumentBlock,
@@ -72,6 +81,7 @@ export default {
       lastDocuments: [],
       lastVideos: [],
       lastScenarios: [],
+      lastPhotos: [],
     }
   },
   created() {
@@ -81,10 +91,12 @@ export default {
     const lastDocuments = await DocumentsService.fetchDocuments(5);
     const lastVideos = await VideosService.fetchVideos(3);
     const lastScenarios = await ScenariosService.fetchScenarios(5);
+    const lastPhotos = await PhotosService.fetchPhotos(5);
 
     this.lastDocuments = lastDocuments.data.documents;
     this.lastVideos = lastVideos.data.videos;
     this.lastScenarios = lastScenarios.data.scenarios;
+    this.lastPhotos = lastPhotos.data.photos;
   }
 }
 </script>

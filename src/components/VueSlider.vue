@@ -56,12 +56,13 @@ export default {
       // для прода
       this.slides = this.photos.map(el => el.path);
 
-      this.$refs.thumbnails.reload();
-      this.$refs.main.reload();
+      setTimeout(() => {
+        this.$refs.thumbnails.reload();
+        this.$refs.main.reload();
+      }, 300);
     }
   },
   mounted () {
-    this.slides = this.photos.map(el => `http://localhost:8081${el.path}`);
     this.asNavFor1.push(this.$refs.thumbnails);
     this.asNavFor2.push(this.$refs.main);
   }
