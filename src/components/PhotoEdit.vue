@@ -1,6 +1,6 @@
 <template>
   <div class="photo-edit">
-    <img :src="`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${photo.path}`" />
+    <img :src="link" />
 
     <button @click="deleteHandler">x</button>
   </div>
@@ -15,6 +15,11 @@ export default {
   name: "PhotoEdit",
   components: {IconBase, IconDelete},
   props: ['photo'],
+  computed: {
+    link() {
+      return `${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${this.photo.path}`
+    }
+  },
   methods: {
     async deleteHandler() {
       if(!confirm('Точно удалить?')) return;
