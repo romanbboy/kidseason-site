@@ -1,10 +1,6 @@
 <template>
   <div class="photo-edit">
-    <!--для разработки-->
-<!--    <img :src="`http://localhost:8081${photo.path}`" />-->
-
-    <!--для прода-->
-    <img :src="photo.path" alt="" />
+    <img :src="`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${photo.path}`" />
 
     <button @click="deleteHandler">x</button>
   </div>

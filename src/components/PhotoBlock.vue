@@ -1,11 +1,6 @@
 <template>
-  <div class="PhotoBlock">
-<!--    для разработки-->
-<!--    <img :src="`http://localhost:8081${photo.path}`" />-->
-
-    <!--    для прода-->
-    <img :src="photo.path" />
-
+  <div class="PhotoBlock" @click="$emit('change-tumb')">
+    <img :src="photo" />
   </div>
 </template>
 
@@ -19,13 +14,14 @@ export default {
 
 <style lang="scss" scoped>
 .PhotoBlock{
-  flex: 18% 0 0;
-  margin-bottom: 15px;
+  flex: 23% 0 0;
+  margin: 15px 10px;
   min-width: 200px;
+  cursor: pointer;
 
   img{
     width: 100%;
-    min-height: 150px;
+    height: 200px;
     object-fit: cover;
   }
 }

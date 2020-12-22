@@ -87,4 +87,12 @@ main{
     }
   }
 }
+
+.light-gallery{
+  li{
+    &:before{
+      background: none !important;
+    }
+  }
+}
 </style>

@@ -45,7 +45,7 @@
         </div>
         <div class="mv-5 pb-5" v-if="lastPhotos.length">
           <h2>Последние фото</h2>
-          <div class="flex flex-main-around flex-cross-center">
+          <div class="flex flex-main-around flex-cross-center flex-wrap">
             <PhotoBlock v-for="photo in lastPhotos" :photo="photo" :key="photo._id"/>
           </div>
         </div>
@@ -91,12 +91,12 @@ export default {
     const lastDocuments = await DocumentsService.fetchDocuments(5);
     const lastVideos = await VideosService.fetchVideos(3);
     const lastScenarios = await ScenariosService.fetchScenarios(5);
-    const lastPhotos = await PhotosService.fetchPhotos(5);
+    const lastPhotos = await PhotosService.fetchPhotos(4);
 
     this.lastDocuments = lastDocuments.data.documents;
     this.lastVideos = lastVideos.data.videos;
     this.lastScenarios = lastScenarios.data.scenarios;
-    this.lastPhotos = lastPhotos.data.photos;
+    this.lastPhotos = lastPhotos.data.photos.map(el => `${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${el.path}`);
   }
 }
 </script>

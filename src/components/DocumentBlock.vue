@@ -2,7 +2,7 @@
   <div class="DocumentBlock">
     <span>{{ document.name }}</span>
 
-    <a :href="document.path" download>
+    <a :href="link" download>
       <IconBase width="25"
                 height="25"
                 :icon-color="svgColor"
@@ -24,6 +24,11 @@
     data() {
       return {
         svgColor: '#46A4B5'
+      }
+    },
+    computed: {
+      link() {
+        return `${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${this.document.path}`
       }
     }
   }
