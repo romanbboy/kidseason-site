@@ -6,11 +6,39 @@
           <AvatarBlock />
 
           <div class="owner-info--info">
-            <h2><span class="color-blue">Мороз</span> <span class="color-pink">Лариса</span> <span class="color-orange">Яковлевна</span></h2>
-            <p>Супер кошечка))</p>
-            <p><b>Должность:</b> мама троих высоких детей</p>
-            <p><b>Стаж:</b> 28 лет</p>
-            <p>49 лет, выглядит на <b>24</b> года</p>
+            <JumpText text="Мороз Лариса Яковлевна" fontSize="45px" />
+            <br>
+
+            <div class="info-point">
+              <IconBase width="30" height="30" :icon-color="'#A168A0'" view-box="0 0 349.2 349.2">
+                <IconEducation />
+              </IconBase>
+              <span>Образование: <b>среднее специальное</b></span>
+            </div>
+            <div class="info-point">
+              <IconBase width="30" height="30" :icon-color="'#4E5B96'" view-box="0 0 349.2 349.2">
+                <IconEducation />
+              </IconBase>
+              <span><b>Бердичевское педагогическое училище</b></span>
+            </div>
+            <div class="info-point">
+              <IconBase width="30" height="30" :icon-color="'#4329D2'" view-box="0 0 31.368 31.369">
+                <IconGoverness/>
+              </IconBase>
+              <span>Специальность: <b>учитель музыки, музыкальный воспитатель</b></span>
+            </div>
+            <div class="info-point">
+              <IconBase width="30" height="30" :icon-color="'#CE2722'" view-box="0 0 512 512">
+                <IconSkill />
+              </IconBase>
+              <span>Педагогический стаж: <b>21</b></span>
+            </div>
+            <div class="info-point">
+              <IconBase width="30" height="30" :icon-color="'#000'" view-box="0 0 511.999 511.999">
+                <IconCoolSmile />
+              </IconBase>
+              <span>Квалификационная категория: <b>высшая</b></span>
+            </div>
           </div>
         </div>
       </div>
@@ -18,8 +46,9 @@
 
     <section class="pb-3">
       <div class="container">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium alias animi at consequatur cum dolorem dolores error eum explicabo harum ipsum itaque laboriosam laudantium nemo, nesciunt nobis nulla perferendis perspiciatis, possimus quas quia quibusdam quis quo ratione repellat sapiente sed sint, soluta voluptatum. Aut ipsum minus, officiis quam quo repellat sapiente sed vel voluptatum! Architecto delectus deserunt fugiat ipsum maxime minus modi nam, non saepe ullam, vel, veniam. Iusto laborum necessitatibus nisi quisquam tempore voluptas voluptatibus. Autem dignissimos dolore eos inventore odit optio pariatur quaerat tempore! Accusamus corporis cupiditate dolores explicabo, illum ipsa modi molestiae molestias mollitia, neque officia quas quos sed tenetur voluptas! Asperiores assumenda libero numquam quam sint. A ad alias aliquid animi aspernatur consectetur cum doloribus eligendi enim eos et excepturi facilis fugiat in ipsum iste, itaque iusto laboriosam laborum libero modi nisi placeat qui quibusdam quidem quod reiciendis saepe sapiente, sunt ullam! Doloribus iusto, necessitatibus. Alias distinctio dolor dolorum earum, fugiat hic ipsa ipsam magnam necessitatibus, nobis odit pariatur sunt vitae voluptatem voluptates. Accusantium dolorum esse et, iusto odit pariatur quo. Accusamus aut blanditiis deleniti dolore, eligendi est impedit minus nemo nihil, obcaecati optio quae quibusdam quis quo tempora unde, ut velit! .</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci amet atque commodi corporis cum cumque debitis deserunt dicta, dolor, dolore ducimus ea ex exercitationem expedita facilis fuga fugiat hic illum in ipsum itaque laudantium neque officia pariatur quae qui quia repellendus saepe sequi sit tempora vitae voluptatibus? Corporis cumque et magni minima rem. Ducimus eaque eius est itaque laborum voluptas, voluptatum! Accusamus aut consequatur cum cupiditate debitis dicta doloribus eius eligendi eos esse et eum expedita explicabo facilis fuga harum ipsam iste iure, maiores molestiae nemo nobis non numquam porro praesentium qui quidem rerum sed soluta unde voluptate voluptatibus!</p>
+        <p>«Любите и изучайте великое искусство музыки. Оно откроет вам целый мир высоких чувств, страстей, мыслей. Оно сделает вас духовно богаче. Благодаря музыке вы найдете в себе новые неведомые вам прежде силы. Вы увидите жизнь в новых тонах и красках.»</p>
+        <p>«Музыка воодушевляет весь мир, снабжает душу крыльями, способствует полету воображения; музыка придает жизнь и веселье всему существующему, делает человека счасливым… Ее можно назвать воплощением всего прекрасного и всего возвышенного.»</p>
+        <p>Что такое музыка? Она занимает место между мыслью и явлением; как предрассветная посредница, стоит она между духом и материей; родственная обоим, она отлична от них; это дух, нуждающийся в размеренном времени; это материя, но материя, которая обходится без пространства.</p>
       </div>
     </section>
 
@@ -27,19 +56,19 @@
       <div class="container">
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastDocuments.length">
           <h2>Последние документы</h2>
-          <div class="flex">
+          <div class="flex flex-wrap">
             <DocumentBlock v-for="doc in lastDocuments" :document="doc" :key="doc._id"/>
           </div>
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastScenarios.length">
           <h2>Последние сценарии</h2>
-          <div class="flex">
+          <div class="flex flex-wrap">
             <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :key="el._id"/>
           </div>
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastVideos.length">
           <h2>Последние видео</h2>
-          <div class="flex flex-main-around">
+          <div class="flex flex-main-around flex-wrap">
             <VideoBlock v-for="video in lastVideos" :video="video" :key="video._id"/>
           </div>
         </div>
@@ -66,10 +95,22 @@ import VideoBlock from "@/components/VideoBlock";
 import ScenarioBlock from "@/components/ScenarioBlock";
 import PhotosService from "@/services/PhotosService";
 import PhotoBlock from "@/components/PhotoBlock";
+import JumpText from "@/components/JumpText";
+import IconBase from "../components/icons/IconBase"
+import IconEducation from "../components/icons/IconEducation"
+import IconGoverness from "../components/icons/IconGoverness"
+import IconSkill from "../components/icons/IconSkill"
+import IconCoolSmile from "../components/icons/IconCoolSmile"
 
 export default {
   name: 'Home',
   components: {
+    IconBase,
+    IconEducation,
+    IconGoverness,
+    IconCoolSmile,
+    IconSkill,
+    JumpText,
     PhotoBlock,
     ScenarioBlock,
     VideoBlock,
@@ -109,13 +150,16 @@ export default {
     margin: 30px 0;
 
     &--info{
-      clip-path: polygon(0% 100%, 0% 100%, 0% 0%, 0% 0%);
-      margin-left: 70px;
-      animation: appear-polygon 1s forwards 1.2s;
+      margin-left: 100px;
 
-      p{
-        text-align: center;
-        margin-bottom: var(--grid-atom);
+      .info-point{
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+
+        svg{
+          margin-right: 15px;
+        }
       }
     }
   }

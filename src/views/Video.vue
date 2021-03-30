@@ -1,7 +1,7 @@
 <template>
   <div class="h100">
     <EmptyBlock v-if="!section" />
-    <div v-else class="flex flex-main-around">
+    <div v-else class="flex flex-main-around flex-wrap">
       <VideoBlock v-for="video in videos"
                 :video="video"
                 :key="video._id"/>

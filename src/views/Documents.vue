@@ -1,7 +1,7 @@
 <template>
   <div class="h100">
     <EmptyBlock v-if="!section" />
-    <div v-else class="flex">
+    <div v-else class="flex flex-wrap">
       <DocumentBlock v-for="doc in documents"
                      :document="doc"
                      :key="doc._id"/>

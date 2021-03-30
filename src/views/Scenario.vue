@@ -3,7 +3,7 @@
     <EmptyBlock v-if="!section" />
     
     <div v-else>
-      <div v-if="!nameScenario" class="flex">
+      <div v-if="!nameScenario" class="flex flex-wrap">
         <ScenarioBlock v-for="el in scenarios"
                        :scenario="el"
                        :key="el._id"/>

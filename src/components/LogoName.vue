@@ -99,6 +99,20 @@
     transform: rotate(40deg);
   }
 }
+
+@keyframes rain {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
   
 .logo{
   display: flex;
@@ -108,7 +122,7 @@
     width: 100px;
     margin-right: 20px;
     opacity: 0;
-    animation: appear-move-rotate 2s forwards;
+    animation: rain 2s forwards;
   }
   
   .logo-name{
