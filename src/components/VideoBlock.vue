@@ -1,15 +1,17 @@
 <template>
   <div class="VideoBlock">
     <iframe :src="srcVideo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <p>{{ video.name }}</p>
+    <JumpText :text="video.name" fontSize="20px" />
   </div>
 </template>
 
 <script>
 import {getUrlParam} from '@/utils/getUrlParameter';
+import JumpText from "@/components/JumpText";
 
 export default {
   name: "VideoBlock",
+  components: {JumpText},
   props: ['video'],
   computed: {
     srcVideo() {

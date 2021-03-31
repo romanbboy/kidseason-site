@@ -11,11 +11,10 @@ export default {
   name: 'JumpText',
   components: {JumpTextWord},
   props: ['text', 'fontSize', 'textAlign'],
-  data: () => ({
-    content: []
-  }),
-  mounted() {
-    this.content = this.text.split('')
+  computed: {
+    content() {
+      return this.text.split('')
+    }
   }
 }
 </script>
