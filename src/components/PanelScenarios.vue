@@ -19,7 +19,7 @@
         </div>
         <br>
         <div class="form-control">
-          <ckeditor v-model="formAddScenario.content"></ckeditor>
+          <ckeditor v-model="formAddScenario.content" :editor-url="editorUrl" :config="editorConfig"></ckeditor>
         </div>
 
         <div class="actions">
@@ -61,6 +61,10 @@ export default {
       name: '',
       section: ''
     },
+    editorUrl: 'https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js',
+    editorConfig: {
+      height: 400
+    }
   }),
   computed: {
     categories() {

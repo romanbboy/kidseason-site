@@ -26,7 +26,7 @@
         </div>
 
       </div>
-      <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>
+      <ckeditor v-model="editorData" :editor-url="editorUrl" :config="editorConfig" ></ckeditor>
     </div>
   </div>
 </template>
@@ -48,6 +48,7 @@
         newName: this.scene.name,
         section: this.scene.section,
         editorData: this.scene.content,
+        editorUrl: 'https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js',
         editorConfig: {
           height: 400
         }
