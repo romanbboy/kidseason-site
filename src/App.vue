@@ -42,7 +42,7 @@
     methods: {
       async getCategories() {
         const response = await CategoriesService.fetchCategories();
-        this.$store.dispatch('setCategories', response.data.categories);
+        await this.$store.dispatch('setCategories', response.data.categories);
       }
     },
     mounted() {

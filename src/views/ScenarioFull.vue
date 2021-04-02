@@ -21,6 +21,19 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped >
+  .scenario-content{
+    padding: 25px 15px;
+    background: rgba(255, 255, 255, .7);
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 
+    /deep/ img {
+      max-width: 100%;
+    }
+
+    /deep/ p {
+      margin-bottom: 0;
+    }
+  }
 </style>

@@ -46,9 +46,9 @@
       }
     },
     beforeCreate() {
-      // let password = md5(prompt('Введи пароль'));
+      let password = md5(prompt('Введи пароль'));
       // qaz123wsxLorka
-      // if(password !== '1401eee95caf8ed45464912964da645b') this.$router.push('/');
+      if(password !== '1401eee95caf8ed45464912964da645b') this.$router.push('/');
     }
   }
 </script>

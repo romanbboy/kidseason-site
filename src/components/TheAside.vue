@@ -59,6 +59,7 @@
 aside{
   flex: 300px 0 0;
   min-height: 100%;
+  max-height: 100vh;
   border-right: var(--border-markup);
   padding: 20px;
   display: flex;
