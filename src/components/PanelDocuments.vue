@@ -29,7 +29,6 @@
           </vue-dropzone>
         </div>
 
-        <i>Разрешенные форматы: <b>doc, docx, pdf</b></i>
         <div class="actions">
           <button type="submit" @click.prevent="addDocument">Добавить</button>
         </div>
@@ -67,8 +66,7 @@ export default {
       section: ''
     },
     dropOptions: {
-      url: "https://httpbin.org/post",
-      maxFiles: 1
+      url: "https://httpbin.org/post"
     },
   }),
   computed: {

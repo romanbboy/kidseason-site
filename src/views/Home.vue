@@ -77,7 +77,11 @@
         <div class="mv-5 pb-5" v-if="lastPhotos.length">
           <h2>Последние фото</h2>
           <div class="flex flex-main-around flex-cross-center flex-wrap">
-            <PhotoBlock v-for="photo in lastPhotos" :photo="photo" :key="photo._id"/>
+            <LightGallery :images="lastPhotos" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
+            <PhotoBlock v-for="(thumb, thumbIndex) in lastPhotos"
+                        :photo="thumb"
+                        :key="thumbIndex"
+                        @change-tumb="indexGallery = thumbIndex"/>
           </div>
         </div>
       </div>
@@ -103,6 +107,7 @@ import IconEducation from "../components/icons/IconEducation"
 import IconGoverness from "../components/icons/IconGoverness"
 import IconSkill from "../components/icons/IconSkill"
 import IconCoolSmile from "../components/icons/IconCoolSmile"
+import { LightGallery } from 'vue-light-gallery';
 
 export default {
   name: 'Home',
@@ -117,7 +122,8 @@ export default {
     ScenarioBlock,
     VideoBlock,
     DocumentBlock,
-    AvatarBlock
+    AvatarBlock,
+    LightGallery
   },
   data() {
     return {
@@ -125,6 +131,7 @@ export default {
       lastVideos: [],
       lastScenarios: [],
       lastPhotos: [],
+      indexGallery: null
     }
   },
   created() {

@@ -1,6 +1,6 @@
 <template>
   <span v-if="word === ' '" v-html="' '"></span>
-  <span v-else :style="{color: color, animationDelay: animationDelay, animationDuration: animationDuration}">{{ word }}</span>
+  <span v-else :style="{color: initColor || randomColor, animationDelay: animationDelay, animationDuration: animationDuration}">{{ word }}</span>
 </template>
 
 <script>
@@ -9,9 +9,9 @@ import {randomFloatNumber} from "@/utils/randomNumber";
 
 export default {
   name: 'JumpTextWord',
-  props: ['word'],
+  props: ['word', 'initColor'],
   data: () => ({
-    color: randomColor(),
+    randomColor: randomColor(),
     animationDelay: randomFloatNumber(0, 3) + 's',
     animationDuration: randomFloatNumber(0, 1) + 's',
   })

@@ -1,6 +1,8 @@
 <template>
   <div class="DocumentBlock">
-    <span>{{ document.name }}</span>
+    <span>
+      <JumpText :text="document.name" :color="'#EC4D77'" />
+    </span>
 
     <a :href="link" download>
       <IconBase width="25"
@@ -16,11 +18,12 @@
 <script>
   import IconBase from "./icons/IconBase";
   import IconUploadDocument from "./icons/IconUploadDocument";
+  import JumpText from "@/components/JumpText";
 
   export default {
     name: "DocumentBlock",
     props: ['document'],
-    components: {IconBase, IconUploadDocument},
+    components: {JumpText, IconBase, IconUploadDocument},
     data() {
       return {
         svgColor: '#46A4B5'
@@ -53,7 +56,6 @@
     span{
       margin-bottom: 8px;
       margin-right: 20px;
-      color: var(--palette-1)
     }
   }
 </style>
