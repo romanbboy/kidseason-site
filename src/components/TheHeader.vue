@@ -10,13 +10,13 @@
           <a class="nav-link">Главная</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/documents" active-class="active" v-if="lastDocuments.length">
-          <a class="nav-link">Документы</a>
+          <a class="nav-link">Портфолио</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/video" active-class="active" v-if="lastVideos.length">
           <a class="nav-link">Видео</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/scenario" active-class="active" v-if="lastScenarios.length">
-          <a class="nav-link">Сценарии</a>
+          <a class="nav-link">Методическая копилка</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/photo" active-class="active" v-if="lastPhotos.length">
           <a class="nav-link">Фото</a>

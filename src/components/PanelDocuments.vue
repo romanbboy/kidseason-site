@@ -1,6 +1,6 @@
 <template>
   <div  class="documents-block">
-    <p class="bigP fz-24 ff-kosko tac mb-20">Документы</p>
+    <p class="bigP fz-24 ff-kosko tac mb-20">Портфолио</p>
 
     <div class="form-add form-add_document">
       <h4 class="fz-20 mb-20 text-center cursor-pointer" @click="formAddDocument.show = !formAddDocument.show">Добавить документ</h4>

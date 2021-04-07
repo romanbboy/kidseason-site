@@ -50,7 +50,7 @@ router.delete('/:id', async (req, res) => {
   
   // в документах
   const documents = await Document.find({section: category.name}).exec();
-  if (documents.length) message += '-Документы-';
+  if (documents.length) message += '-Портфолио-';
 
   // в видео
   const videos = await Video.find({section: category.name}).exec();
@@ -58,7 +58,7 @@ router.delete('/:id', async (req, res) => {
 
   // в сценариях
   const scenarios = await Scenario.find({section: category.name}).exec();
-  if (scenarios.length) message += '-Сценарии-';
+  if (scenarios.length) message += '-Методическая копилка-';
 
   // в фото
   const photos = await Photo.find({section: category.name}).exec();

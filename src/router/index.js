@@ -15,7 +15,7 @@ const routes = [
     path: '/documents/:section?',
     name: 'Documents',
     component: () => import(/* webpackChunkName: "documents" */ '../views/Documents.vue'),
-    meta: {title: 'Документы'}
+    meta: {title: 'Портфолио'}
   },
   {
     path: '/video/:section?',
@@ -27,7 +27,7 @@ const routes = [
     path: '/scenario/:section?',
     name: 'Scenario',
     component: () => import(/* webpackChunkName: "scenario" */ '../views/Scenario.vue'),
-    meta: {title: 'Сценарии'},
+    meta: {title: 'Методическая копилка'},
     children: [
       {
         path: 'content/:nameScenario',

@@ -56,22 +56,22 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
-  $main-gradient: linear-gradient(to right, rgba(175, 167, 227, 0.98), rgba(211, 255, 232, 0.8));
+  $main-gradient: linear-gradient(to right, rgba(175, 167, 227, 0.48), rgba(211, 255, 232, 0.8));
 
   &.Bg-Home{
-    background: $main-gradient, url('./assets/img/bg/mainBG.png') repeat;
+    //background: $main-gradient, url('./assets/img/bg/mainBG.png') repeat;
   }
   &.Bg-Video{
-    background-image: $main-gradient, url('./assets/img/bg/bg_video.jpg');
+    //background-image: $main-gradient, url('./assets/img/bg/bg_video.jpg');
   }
   &.Bg-Documents{
-    background-image: $main-gradient, url('./assets/img/bg/bg_documents.jpg');
+    //background-image: $main-gradient, url('./assets/img/bg/bg_documents.jpg');
   }
   &.Bg-Photo{
-    background-image: $main-gradient, url('./assets/img/bg/bg_photo.jpg');
+    //background-image: $main-gradient, url('./assets/img/bg/bg_photo.jpg');
   }
   &.Bg-Scenario, &.Bg-ScenarioFull{
-    background-image: $main-gradient, url('./assets/img/bg/bg_scenario.jpg');
+    //background-image: $main-gradient, url('./assets/img/bg/bg_scenario.jpg');
   }
 
 }

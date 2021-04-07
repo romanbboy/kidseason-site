@@ -2,6 +2,9 @@
   <div id="HomePage">
     <section class="section">
       <div class="container">
+        <h2 class="text-center color-blue">САЙТ МУЗЫКАЛЬНОГО РУКОВОДИТЕЛЯ</h2>
+        <br>
+
         <div class="owner-info">
           <AvatarBlock />
 
@@ -13,31 +16,31 @@
               <IconBase width="30" height="30" :icon-color="'#A168A0'" view-box="0 0 349.2 349.2">
                 <IconEducation />
               </IconBase>
-              <span>Образование: <b>среднее специальное</b></span>
+              <span>Образование: среднее специальное</span>
             </div>
             <div class="info-point">
               <IconBase width="30" height="30" :icon-color="'#4E5B96'" view-box="0 0 349.2 349.2">
                 <IconEducation />
               </IconBase>
-              <span><b>Бердичевское педагогическое училище</b></span>
+              <span>Бердичевское педагогическое училище</span>
             </div>
             <div class="info-point">
               <IconBase width="30" height="30" :icon-color="'#4329D2'" view-box="0 0 31.368 31.369">
                 <IconGoverness/>
               </IconBase>
-              <span>Специальность: <b>учитель музыки, музыкальный воспитатель</b></span>
+              <span>Специальность: учитель музыки, музыкальный воспитатель</span>
             </div>
             <div class="info-point">
               <IconBase width="30" height="30" :icon-color="'#CE2722'" view-box="0 0 512 512">
                 <IconSkill />
               </IconBase>
-              <span>Педагогический стаж: <b>21</b></span>
+              <span>Педагогический стаж: 21</span>
             </div>
             <div class="info-point">
               <IconBase width="30" height="30" :icon-color="'#000'" view-box="0 0 511.999 511.999">
                 <IconCoolSmile />
               </IconBase>
-              <span>Квалификационная категория: <b>высшая</b></span>
+              <span>Квалификационная категория: высшая</span>
             </div>
           </div>
         </div>
@@ -46,36 +49,36 @@
 
     <section class="pb-3">
       <div class="container">
-        Без музыки не проживу и дня!<br>
-        Она во мне. Она вокруг меня <br>
-        И в пенье птиц, и в шуме городов, <br>
-        В молчанье трав и в радуге цветов, <br>
-        И в зареве рассвета над землей...
+        <JumpText text="Без музыки не проживу и дня!" font-size="18px" text-align="center" color="#4156DC" />
+        <JumpText text="Она во мне. Она вокруг меня" font-size="18px" text-align="center" color="#4156DC" />
+        <JumpText text="И в пенье птиц, и в шуме городов," font-size="18px" text-align="center" color="#4156DC" />
+        <JumpText text="В молчанье трав и в радуге цветов," font-size="18px" text-align="center" color="#4156DC" />
+        <JumpText text="И в зареве рассвета над землей..." font-size="18px" text-align="center" color="#4156DC" />
       </div>
     </section>
 
     <section>
       <div class="container">
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastDocuments.length">
-          <h2>Последние документы</h2>
+          <h2 class="color-blue">Последнее из портфолио</h2>
           <div class="flex flex-wrap">
             <DocumentBlock v-for="doc in lastDocuments" :document="doc" :key="doc._id"/>
           </div>
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastScenarios.length">
-          <h2>Сценарии</h2>
+          <h2 class="color-blue">Методическая копилка</h2>
           <div class="flex flex-wrap">
             <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :key="el._id"/>
           </div>
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastVideos.length">
-          <h2>Последние видео</h2>
+          <h2 class="color-blue">Последние видео</h2>
           <div class="flex flex-main-around flex-wrap">
             <VideoBlock v-for="video in lastVideos" :video="video" :key="video._id"/>
           </div>
         </div>
         <div class="mv-5 pb-5" v-if="lastPhotos.length">
-          <h2>Последние фото</h2>
+          <h2 class="color-blue">Последние фото</h2>
           <div class="flex flex-main-around flex-cross-center flex-wrap">
             <LightGallery :images="lastPhotos" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
             <PhotoBlock v-for="(thumb, thumbIndex) in lastPhotos"

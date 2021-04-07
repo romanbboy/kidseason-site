@@ -1,17 +1,20 @@
 <template>
   <div class="ScenarioBlock">
-    <span>{{ scenario.name }}</span>
+    <div class="ScenarioBlock__name">{{ scenario.name }}</div>
+    <div class="ScenarioBlock__text" v-html="scenario.content.substr(0, 200)+'...'"></div>
 
-    <router-link tag="a"
-                 :key="scenario.sign"
-                 :to="{name: 'ScenarioFull', params: {section: scenario.section, nameScenario: scenario.sign} }">
-      <IconBase width="22"
-                height="22"
-                :icon-color="svgColor"
-                view-box="0 0 511.999 511.999">
-        <IconEye />
-      </IconBase>
-    </router-link>
+    <div class="ScenarioBlock__link">
+      <router-link tag="a"
+                   :key="scenario.sign"
+                   :to="{name: 'ScenarioFull', params: {section: scenario.section, nameScenario: scenario.sign} }">
+        <IconBase width="22"
+                  height="22"
+                  :icon-color="svgColor"
+                  view-box="0 0 511.999 511.999">
+          <IconEye />
+        </IconBase>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -38,23 +41,31 @@
     border-radius: 15px;
     box-shadow: 0 4px 24px var(--plate-shadow);
     margin-bottom: 15px;
-    display: flex;
-    align-items: center;
     transition: box-shadow .3s;
     margin-right: 30px;
+    position: relative;
+    max-width: 50%;
 
     &:hover{
       box-shadow: 0 0 12px var(--plate-hover-shadow);
     }
 
-    span{
-      margin-right: 15px;
-      margin-bottom: 1px;
+    &__name{
+      font-size: 24px;
+      margin-bottom: 8px;
       color: var(--palette-1)
     }
 
-    a{
-      line-height: 0;
+    &__text{
+      /deep/ p {
+        margin-bottom: 5px;
+      }
+    }
+
+    &__link {
+      position: absolute;
+      bottom: 0;
+      right: 10px;
     }
   }
 </style>

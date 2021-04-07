@@ -1,6 +1,6 @@
 <template>
   <div class="scenario-block">
-    <p class="bigP fz-24 ff-kosko tac mb-20">Сценарии</p>
+    <p class="bigP fz-24 ff-kosko tac mb-20">Методическая копилка</p>
 
     <div class="form-add form-add_scenario">
       <h4 class="fz-20 mb-20 text-center cursor-pointer" @click="formAddScenario.show = !formAddScenario.show">Добавить сценарий</h4>
