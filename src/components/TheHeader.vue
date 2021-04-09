@@ -16,6 +16,9 @@
           <a class="nav-link">Видео</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/scenario" active-class="active" v-if="lastScenarios.length">
+          <a class="nav-link">Сценарии</a>
+        </router-link>
+        <router-link tag="li" class="nav-item" to="/methodical" active-class="active" v-if="lastMethodical.length">
           <a class="nav-link">Методическая копилка</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/photo" active-class="active" v-if="lastPhotos.length">
@@ -43,18 +46,21 @@
         lastDocuments: [],
         lastVideos: [],
         lastScenarios: [],
+        lastMethodical: [],
         lastPhotos: [],
       }
     },
     async mounted() {
       const lastDocuments = await DocumentsService.fetchDocuments(5);
       const lastVideos = await VideosService.fetchVideos(3);
-      const lastScenarios = await ScenariosService.fetchScenarios(5);
+      const lastScenarios = await ScenariosService.fetchScenarios('common', 5);
+      const lastMethodical = await ScenariosService.fetchScenarios('methodical', 5);
       const lastPhotos = await PhotosService.fetchPhotos(5);
 
       this.lastDocuments = lastDocuments.data.documents;
       this.lastVideos = lastVideos.data.videos;
       this.lastScenarios = lastScenarios.data.scenarios;
+      this.lastMethodical = lastMethodical.data.scenarios;
       this.lastPhotos = lastPhotos.data.photos;
     }
   }

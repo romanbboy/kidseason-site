@@ -5,10 +5,10 @@ const Scenario = require('../models/scenario-model');
 
 const router = Router();
 
-router.get('/:limit?', (req, res) => {
+router.get('/:type?/:limit?', (req, res) => {
   if(req.params.limit){
     Scenario
-      .find({}, 'id name sign section content')
+      .find({methodical: req.params.type === 'methodical'}, 'id name sign section content methodical')
       .sort({'_id': -1})
       .limit(+req.params.limit)
       .exec(function(err, scenarios) {
@@ -16,7 +16,10 @@ router.get('/:limit?', (req, res) => {
         else res.send({ scenarios })
       });
   } else {
-    Scenario.find({}, 'id name sign section content', (err, scenarios) => {
+    let objFind = {};
+    if (req.params.type) objFind = {methodical: req.params.type === 'methodical'}
+
+    Scenario.find(objFind, 'id name sign section content methodical', (err, scenarios) => {
       if (err) res.sendStatus(500);
       else res.send({ scenarios })
     });
@@ -28,7 +31,8 @@ router.post('/', (req, res) => {
     name: req.body.name,
     sign: slugify(req.body.name, { lowercase: false, separator: '_' }),
     section: req.body.section,
-    content: req.body.content
+    content: req.body.content,
+    methodical: req.body.methodical
   });
 
   scenario.save((err, data) => {
@@ -46,7 +50,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  Scenario.findById(req.params.id, 'name section content', (err, scenario) => {
+  Scenario.findById(req.params.id, 'name section content methodical', (err, scenario) => {
     let success = true;
     let message = '';
 
@@ -59,6 +63,7 @@ router.put('/:id', (req, res) => {
       }
       if (req.body.section) scenario.section = req.body.section;
       if (req.body.content) scenario.content = req.body.content;
+      if (req.body.methodical !== null) scenario.methodical = req.body.methodical;
 
       scenario.save(err => {
         if (err) {

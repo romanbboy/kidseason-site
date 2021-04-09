@@ -66,9 +66,15 @@
           </div>
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastScenarios.length">
+          <h2 class="color-blue">Сценарии</h2>
+          <div class="flex flex-wrap">
+            <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :target="'Scenario'" :key="el._id"/>
+          </div>
+        </div>
+        <div class="mv-5 pb-5 border-bottom--blue" v-if="lastMethodical.length">
           <h2 class="color-blue">Методическая копилка</h2>
           <div class="flex flex-wrap">
-            <ScenarioBlock v-for="el in lastScenarios" :scenario="el" :key="el._id"/>
+            <ScenarioBlock v-for="el in lastMethodical" :scenario="el" :target="'Methodical'" :key="el._id"/>
           </div>
         </div>
         <div class="mv-5 pb-5 border-bottom--blue" v-if="lastVideos.length">
@@ -133,6 +139,7 @@ export default {
       lastDocuments: [],
       lastVideos: [],
       lastScenarios: [],
+      lastMethodical: [],
       lastPhotos: [],
       indexGallery: null
     }
@@ -143,12 +150,14 @@ export default {
   async mounted() {
     const lastDocuments = await DocumentsService.fetchDocuments(5);
     const lastVideos = await VideosService.fetchVideos(3);
-    const lastScenarios = await ScenariosService.fetchScenarios(5);
+    const lastScenarios = await ScenariosService.fetchScenarios('common', 5);
+    const lastMethodical = await ScenariosService.fetchScenarios('methodical', 5);
     const lastPhotos = await PhotosService.fetchPhotos(4);
 
     this.lastDocuments = lastDocuments.data.documents;
     this.lastVideos = lastVideos.data.videos;
     this.lastScenarios = lastScenarios.data.scenarios;
+    this.lastMethodical = lastMethodical.data.scenarios;
     this.lastPhotos = lastPhotos.data.photos.map(el => `${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${el.path}`);
   }
 }

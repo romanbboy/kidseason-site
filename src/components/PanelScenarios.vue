@@ -18,6 +18,10 @@
           </select>
         </div>
         <br>
+        <div class="form-control mb-20">
+          Это в методическую копилку? &nbsp; <input type="checkbox" :style="{width: 'auto'}" v-model="formAddScenario.methodical" />
+        </div>
+        <br>
         <div class="form-control">
           <ckeditor v-model="formAddScenario.content" :editor-url="editorUrl" :config="editorConfig"></ckeditor>
         </div>
@@ -29,14 +33,29 @@
     </div>
 
     <div class="panel-category">
+      <h3>Сценарии</h3>
       <div class="pc-wrap" v-for="(el, i) in scenarios" :key="i">
         <p class="fz-20">{{ el.name }}</p>
         <div class="list">
-          <ScenarioEdit v-for="scenario in el.listScenarios"
+          <ScenarioEdit v-for="scenario in el.list"
                         @update-scenarios="getScenarios"
                         :scene="scenario"
                         :categories="categories"
                         :key="scenario._id"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-category">
+      <h3>Методическая копилка</h3>
+      <div class="pc-wrap" v-for="(el, i) in methodical" :key="i">
+        <p class="fz-20">{{ el.name }}</p>
+        <div class="list">
+          <ScenarioEdit v-for="methodical in el.list"
+                        @update-scenarios="getScenarios"
+                        :scene="methodical"
+                        :categories="categories"
+                        :key="methodical._id"/>
         </div>
       </div>
     </div>
@@ -59,7 +78,8 @@ export default {
       show: false,
       content: '',
       name: '',
-      section: ''
+      section: '',
+      methodical: false
     },
     editorUrl: 'https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js',
     editorConfig: {
@@ -71,31 +91,24 @@ export default {
       return this.$store.getters.categories;
     },
     scenarios() {
-      let allScenarios = this.$store.getters.allScenarios;
-      let categories = [...new Set(allScenarios.map(item => item.section))];
-      return categories.map(el => ({
-        name: this.$store.getters.getFullNameCategory(el),
-        listScenarios: this.$store.getters.scenariosCategory(el)
-      }))
+      return this.fetchData(false);
+    },
+    methodical() {
+      return this.fetchData(true);
     }
   },
   methods: {
     // scenario
     async addScenario() {
-      if (this.formAddScenario.name !== ''
-          && this.formAddScenario.section !== ''
-          && this.formAddScenario.content !== ''
-      ) {
-        let res = await ScenariosService.addScenario({
-          name: this.formAddScenario.name,
-          section: this.formAddScenario.section,
-          content: this.formAddScenario.content
-        });
+      let {name, section, content, methodical} = this.formAddScenario;
+
+      if (name !== '' && section !== '' && content !== '') {
+        let res = await ScenariosService.addScenario({name, section, content, methodical});
 
         alert(res.data.message);
 
         if (res.data.success) {
-          this.formAddScenario = {name: '', section: '', content: '', show: true}
+          this.formAddScenario = {name: '', section: '', content: '', show: true, methodical: false}
           await this.getScenarios();
         }
       }
@@ -105,6 +118,15 @@ export default {
       const response = await ScenariosService.fetchScenarios();
       await this.$store.dispatch('setScenarios', response.data.scenarios);
     },
+
+    fetchData(methodical) {
+      let data = this.$store.getters.allScenarios.filter(el => el.methodical === methodical);
+      let categories = [...new Set(data.map(item => item.section))];
+      return categories.map(el => ({
+        name: this.$store.getters.getFullNameCategory(el),
+        list: this.$store.getters.scenariosCategory(el).filter(el => el.methodical === methodical)
+      }))
+    }
   },
   async mounted() {
     await this.getScenarios();

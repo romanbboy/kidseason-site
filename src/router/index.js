@@ -38,6 +38,20 @@ const routes = [
     ]
   },
   {
+    path: '/methodical/:section?',
+    name: 'Methodical',
+    component: () => import(/* webpackChunkName: "methodical" */ '../views/Methodical.vue'),
+    meta: {title: 'Методическая копилка'},
+    children: [
+      {
+        path: 'content/:nameMethodical',
+        component: () => import(/* webpackChunkName: "methodicalFull" */ '../views/MethodicalFull.vue'),
+        name: 'MethodicalFull',
+        meta: {title: 'Методическая копилка'}
+      }
+    ]
+  },
+  {
     path: '/photo/:section?',
     name: 'Photo',
     component: () => import(/* webpackChunkName: "video" */ '../views/Photo.vue'),

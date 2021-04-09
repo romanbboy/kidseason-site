@@ -16,7 +16,8 @@ const scenarioSchema = new Schema({
   content: {
     type: String,
     required: true
-  }
+  },
+  methodical: Boolean
 });
 
 module.exports = model('Scenario', scenarioSchema);

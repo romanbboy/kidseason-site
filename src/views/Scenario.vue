@@ -6,6 +6,7 @@
       <div v-if="!nameScenario" class="flex flex-wrap">
         <ScenarioBlock v-for="el in scenarios"
                        :scenario="el"
+                       :target="'Scenario'"
                        :key="el._id"/>
       </div>
 
@@ -37,7 +38,7 @@
     },
     methods: {
       async getScenarios () {
-        const response = await ScenariosService.fetchScenarios();
+        const response = await ScenariosService.fetchScenarios('common');
         await this.$store.dispatch('setScenarios', response.data.scenarios);
 
         let categories = [...new Set(response.data.scenarios.map(item => item.section))];
@@ -46,7 +47,7 @@
             section: el
         }));
 
-        this.$store.dispatch('setAside', {aside, component: 'Scenario'})
+        await this.$store.dispatch('setAside', {aside, component: 'Scenario'})
       }
     },
     mounted () {

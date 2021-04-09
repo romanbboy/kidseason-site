@@ -1,8 +1,8 @@
 import api from './api';
 
 export default {
-  fetchScenarios(limit) {
-    return api().get(`api/scenarios${limit ? '/'+limit : ''}`)
+  fetchScenarios(type, limit) {
+    return api().get(`api/scenarios${type ? '/'+type : ''}${limit ? '/'+limit : ''}`)
   },
   addScenario(params) {
     return api().post('api/scenarios', params)

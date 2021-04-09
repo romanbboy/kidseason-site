@@ -6,7 +6,7 @@
     <div class="ScenarioBlock__link">
       <router-link tag="a"
                    :key="scenario.sign"
-                   :to="{name: 'ScenarioFull', params: {section: scenario.section, nameScenario: scenario.sign} }">
+                   :to="{name: `${target}Full`, params: {section: scenario.section, [`name${target}`]: scenario.sign} }">
         <IconBase width="22"
                   height="22"
                   :icon-color="svgColor"
@@ -24,13 +24,11 @@
 
   export default {
     name: "ScenarioBlock",
-    props: ['scenario'],
+    props: ['scenario', 'target'],
     components: {IconBase, IconEye},
-    data() {
-      return {
-        svgColor: '#00565B'
-      }
-    }
+    data: () => ({
+      svgColor: '#00565B'
+    })
   }
 </script>
 

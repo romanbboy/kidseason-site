@@ -17,6 +17,7 @@
     <div v-if="edit" class="scenario__edit-block">
       <div class="edit-block__name">
         <input type="text" v-model.trim="newName">
+        <div>в копилку <input type="checkbox" v-model="methodical"></div>
         <select v-model="section">
           <option v-for="el in categories" :value="el.name">{{el.fullName}}</option>
         </select>
@@ -46,6 +47,7 @@
       return {
         edit: false,
         newName: this.scene.name,
+        methodical: this.scene.methodical,
         section: this.scene.section,
         editorData: this.scene.content,
         editorUrl: 'https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js',
@@ -61,7 +63,8 @@
             id: this.scene._id,
             name: this.newName,
             section: this.section,
-            content: this.editorData
+            content: this.editorData,
+            methodical: this.methodical
           });
 
           alert(res.data.message);
