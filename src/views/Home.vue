@@ -2,15 +2,15 @@
   <div id="HomePage">
     <section class="section">
       <div class="container">
-        <h2 class="text-center color-blue">САЙТ МУЗЫКАЛЬНОГО РУКОВОДИТЕЛЯ</h2>
+        <JumpText text="САЙТ МУЗЫКАЛЬНОГО РУКОВОДИТЕЛЯ" fontSize="35px" text-align="center"/>
+        <br>
         <br>
 
         <div class="owner-info">
           <AvatarBlock />
 
           <div class="owner-info--info">
-            <JumpText text="Мороз Лариса Яковлевна" fontSize="45px" />
-            <br>
+            <h2 class="color-blue">Мороз Лариса Яковлевна</h2>
 
             <div class="info-point">
               <IconBase width="30" height="30" :icon-color="'#A168A0'" view-box="0 0 349.2 349.2">
@@ -48,12 +48,8 @@
     </section>
 
     <section class="pb-3">
-      <div class="container">
-        <JumpText text="Без музыки не проживу и дня!" font-size="18px" text-align="center" color="#4156DC" />
-        <JumpText text="Она во мне. Она вокруг меня" font-size="18px" text-align="center" color="#4156DC" />
-        <JumpText text="И в пенье птиц, и в шуме городов," font-size="18px" text-align="center" color="#4156DC" />
-        <JumpText text="В молчанье трав и в радуге цветов," font-size="18px" text-align="center" color="#4156DC" />
-        <JumpText text="И в зареве рассвета над землей..." font-size="18px" text-align="center" color="#4156DC" />
+      <div class="container flex flex-main-center">
+        <img src="../assets/img/elements/license.jpg" alt="Диплом" class="w80" style="border-radius: 5px">
       </div>
     </section>
 

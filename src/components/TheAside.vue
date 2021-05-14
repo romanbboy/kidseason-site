@@ -89,6 +89,7 @@ aside{
       padding: 12px 0;
       text-align: center;
       position: relative;
+      color: var(--palette-5);
 
       &.active{
         color: var(--link-color-hover);
