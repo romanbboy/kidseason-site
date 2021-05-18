@@ -13,7 +13,7 @@
           <a class="nav-link">Портфолио</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/methodical" active-class="active" v-if="lastMethodical.length">
-          <a class="nav-link">Методкопилка</a>
+          <a class="nav-link">Методическая копилка</a>
         </router-link>
         <router-link tag="li" class="nav-item" to="/scenario" active-class="active" v-if="lastScenarios.length">
           <a class="nav-link">Сценарии</a>

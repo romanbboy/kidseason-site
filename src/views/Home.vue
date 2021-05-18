@@ -47,11 +47,11 @@
       </div>
     </section>
 
-    <section class="pb-3">
+    <!--<section class="pb-3">
       <div class="container flex flex-main-center">
         <img src="../assets/img/elements/license.jpg" alt="Диплом" class="w80" style="border-radius: 5px">
       </div>
-    </section>
+    </section>-->
 
     <section>
       <div class="container">
