@@ -82,7 +82,7 @@
         <div class="mv-5 pb-5" v-if="lastPhotos.length">
           <h2 class="color-blue">Последние фото</h2>
           <div class="flex flex-main-around flex-cross-center flex-wrap">
-            <LightGallery :images="lastPhotos" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
+            <LightGallery :images="lastPhotos.map(el => el.path)" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
             <PhotoBlock v-for="(thumb, thumbIndex) in lastPhotos"
                         :photo="thumb"
                         :key="thumbIndex"
@@ -150,11 +150,19 @@ export default {
     const lastMethodical = await ScenariosService.fetchScenarios('methodical', 5);
     const lastPhotos = await PhotosService.fetchPhotos(4);
 
-    this.lastDocuments = lastDocuments.data.documents;
     this.lastVideos = lastVideos.data.videos;
     this.lastScenarios = lastScenarios.data.scenarios;
     this.lastMethodical = lastMethodical.data.scenarios;
-    this.lastPhotos = lastPhotos.data.photos.map(el => `${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${el.path}`);
+
+    this.lastDocuments = lastDocuments.data.documents.map(el => {
+      if (process.env.NODE_ENV === 'development') el.path = `http://localhost:8081${el.path}`
+      return el
+    })
+
+    this.lastPhotos = lastPhotos.data.photos.map(el => {
+      if (process.env.NODE_ENV === 'development') el.path = `http://localhost:8081${el.path}`
+      return el
+    })
   }
 }
 </script>

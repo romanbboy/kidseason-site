@@ -3,7 +3,7 @@
     <EmptyBlock v-if="!section" />
 
     <div v-else>
-      <LightGallery :images="photos" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
+      <LightGallery :images="photos.map(el => el.path)" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
 
       <div class="flex flex-wrap">
 
@@ -49,7 +49,7 @@
         const extPic = ['png', 'jpg', 'jpeg'];
 
         return this.$store.getters.documentsCategory(this.section).reduce((acc, el) => {
-          if (extPic.includes(getExtension(el.path))) acc.push(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${el.path}`)
+          if (extPic.includes(getExtension(el.path))) acc.push(el)
           return acc
         }, [])
       }
@@ -57,7 +57,12 @@
     methods: {
       async getDocuments () {
         const response = await DocumentsService.fetchDocuments();
-        await this.$store.dispatch('setDocuments', response.data.documents);
+
+        let documents = response.data.documents.map(el => {
+          if (process.env.NODE_ENV === 'development') el.path = `http://localhost:8081${el.path}`
+          return el
+        });
+        await this.$store.dispatch('setDocuments', documents);
 
         let categories = [...new Set(response.data.documents.map(item => item.section))];
         let aside = categories.map(el => ({

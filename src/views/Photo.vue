@@ -3,7 +3,7 @@
     <EmptyBlock v-if="!section" />
 
     <div v-else>
-      <LightGallery :images="photos" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
+      <LightGallery :images="photos.map(el => el.path)" :index="indexGallery" :disable-scroll="true" @close="indexGallery = null"/>
 
       <div class="flex flex-main-around flex-wrap">
 
@@ -33,13 +33,19 @@ export default {
       return this.$route.params['section'];
     },
     photos() {
-      return this.$store.getters.photosCategory(this.section).map(el => `${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}${el.path}`);
+      return this.$store.getters.photosCategory(this.section);
     }
   },
   methods: {
     async getPhotos () {
       const response = await PhotosService.fetchPhotos();
-      await this.$store.dispatch('setPhotos', response.data.photos);
+
+      let photos = response.data.photos.map(el => {
+        if (process.env.NODE_ENV === 'development') el.path = `http://localhost:8081${el.path}`
+        return el
+      });
+      
+      await this.$store.dispatch('setPhotos', photos);
 
       let categories = [...new Set(response.data.photos.map(item => item.section))];
       let aside = categories.map(el => ({

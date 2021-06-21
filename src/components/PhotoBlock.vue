@@ -1,13 +1,16 @@
 <template>
   <div class="PhotoBlock" @click="$emit('change-tumb')">
-    <img :src="photo" />
+    <img :src="photo.path" />
+    <JumpText v-if="photo.name" :text="photo.name" color="#46A4B5" fontSize="20px" />
   </div>
 </template>
 
 <script>
 
+import JumpText from "@/components/JumpText";
 export default {
   name: "PhotoBlock",
+  components: {JumpText},
   props: ['photo']
 }
 </script>
