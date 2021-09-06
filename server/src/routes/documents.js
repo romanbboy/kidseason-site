@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
 
 const fileMiddleware = require('../middleware/file');
 
@@ -26,32 +27,60 @@ router.get('/:limit?', (req, res) => {
   }
 });
 
-router.post('/', fileMiddleware.single('file'), (req, res) => {
+router.post('/', fileMiddleware.single('file'), async (req, res) => {
   if(!req.file){
     res.send({
       success: false,
       message: 'Какой то косяк с файлом'
     });
-    return;
-  }
-  
-  let pathFile = `/files/documents/${req.file.filename}`;
+  } else {
+    const extImg = ['png', 'jpg', 'jpeg'];
+    const extFile = req.file.filename.split('.').pop();
 
-  const document = new Document({
-    name: req.body.name,
-    path: pathFile,
-    section: req.body.section
-  });
+    let pathFile;
 
-  document.save((err, data) => {
-    if (err) console.log(err);
-    else {
-      res.send({
-        success: true,
-        message: `Документ успешно добавлен`
-      })
+    // Если картинка то:
+    if (extImg.includes(extFile)) {
+      const pathTmpImg = path.resolve(__dirname, `../../files/documents/${req.file.filename}`)
+      const file = sharp(pathTmpImg);
+
+      let metadata = await file.metadata();
+      
+      // Сжимаем изображение временного файла
+      let nameImg = req.file.filename.replace(/\.[^.]+$/, "");
+      let datePostfix = +Date.now();
+      let pathImg = path.resolve(__dirname, `../../files/documents/${nameImg}_${datePostfix}.${metadata.format}`);
+
+      await file
+        .toFormat(metadata.format, {quality: 70})
+        .toFile(pathImg)
+        .then(() => pathFile = `/files/documents/${nameImg}_${datePostfix}.${metadata.format}`)
+        .catch(() => console.log('-----> ', 'Не удалось сохранить изображение'))
+
+      // Удаляем временный файл
+      fs.unlink(pathTmpImg, (err) => {
+        if (err) console.log('-----> ', 'Не удалилось временное изображение');
+      });
     }
-  })
+    else pathFile = `/files/documents/${req.file.filename}`;
+
+    
+    const document = new Document({
+      name: req.body.name,
+      path: pathFile,
+      section: req.body.section
+    });
+
+    document.save((err, data) => {
+      if (err) console.log(err);
+      else {
+        res.send({
+          success: true,
+          message: `Документ успешно добавлен`
+        })
+      }
+    })
+  }
 });
 
 router.put('/:id', (req, res) => {

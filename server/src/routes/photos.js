@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp')
 
 const fileMiddleware = require('../middleware/multerPhotos');
 
@@ -32,31 +33,51 @@ router.post('/', fileMiddleware.array('photos[]'), (req, res) => {
       success: false,
       message: 'Какой то косяк с файлами'
     });
-    return;
-  }
+  } else {
+    req.files.forEach(async (el, i) => {
+      let pathFile;
+      
+      const pathTmpImg = path.resolve(__dirname, `../../files/photos/${el.filename}`)
+      const file = sharp(pathTmpImg);
 
-  req.files.forEach(el => {
-    const pathFile = `/files/photos/${el.filename}`;
+      let metadata = await file.metadata();
 
-    const photo = new Photo({
-      path: pathFile,
-      section: req.body.section
+      // Сжимаем изображение временного файла
+      let nameImg = el.filename.replace(/\.[^.]+$/, "");
+      let datePostfix = `${+Date.now()}_${i}`;
+      let pathImg = path.resolve(__dirname, `../../files/photos/${nameImg}_${datePostfix}.${metadata.format}`);
+
+      await file
+        .toFormat(metadata.format, {quality: 70})
+        .toFile(pathImg)
+        .then(() => pathFile = `/files/photos/${nameImg}_${datePostfix}.${metadata.format}`)
+        .catch(() => console.log('-----> ', 'Не удалось сохранить изображение'))
+
+      // Удаляем временный файл
+      fs.unlink(pathTmpImg, (err) => {
+        if (err) console.log('-----> ', 'Не удалилось временное изображение');
+      });
+
+      const photo = new Photo({
+        path: pathFile,
+        section: req.body.section
+      });
+
+      photo.save((err, data) => {
+        if (err) {
+          res.send({
+            success: false,
+            message: err
+          });
+        }
+      })
     });
 
-    photo.save((err, data) => {
-      if (err) {
-        res.send({
-          success: false,
-          message: err
-        });
-      }
-    })
-  });
-
-  res.send({
-    success: true,
-    message: 'Фото успешно добавлены'
-  });
+    res.send({
+      success: true,
+      message: 'Фото успешно добавлены'
+    });
+  }
 });
 
 router.delete('/:id', (req, res) => {

@@ -98,7 +98,7 @@ export default {
 
         this.$refs.dropzone_photo.removeAllFiles();
         this.$refs.dropzone_photo.enable();
-        this.formAddPhoto.files = [];
+        this.formAddPhoto.photos = [];
 
         if(res.data.success){
           this.formAddPhoto.section = '';
