@@ -1,7 +1,8 @@
 <template>
   <div class="DocumentBlock">
     <span>
-      <JumpText :text="document.name" :color="'#EC4D77'" />
+      {{document.name}}
+<!--      <JumpText :text="document.name" :color="'#EC4D77'" />-->
     </span>
 
     <a :href="document.path" download>
@@ -51,6 +52,9 @@
     span{
       margin-bottom: 8px;
       margin-right: 20px;
+      color: var(--palette-1);
+      font-size: 20px;
+      font-family: 'Kosko';
     }
   }
 </style>

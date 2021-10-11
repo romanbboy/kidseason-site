@@ -1,7 +1,8 @@
 <template>
   <div class="PhotoBlock" @click="$emit('change-tumb')">
     <img :src="photo.path" />
-    <JumpText v-if="photo.name" :text="photo.name" color="#46A4B5" fontSize="20px" />
+    <p v-if="photo.name">{{photo.name}}</p>
+<!--    <JumpText v-if="photo.name" :text="photo.name" color="#46A4B5" fontSize="20px" />-->
   </div>
 </template>
 
@@ -26,6 +27,12 @@ export default {
     width: 100%;
     height: 200px;
     object-fit: cover;
+  }
+
+  p {
+    color: var(--palette-5);
+    font-size: 20px;
+    font-family: 'Kosko';
   }
 }
 </style>
